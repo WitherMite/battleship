@@ -11,7 +11,7 @@ export default [
     },
   },
   {
-    files: ["*.test.js"],
+    files: ["*.test.js", "src/*.test.js"],
     env: {
       jest: true,
     },
