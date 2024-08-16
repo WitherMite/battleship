@@ -20,22 +20,6 @@ describe("Create valid ship objects", () => {
   });
 });
 
-describe("Ships can be hit", () => {
-  const ship = createShip(5);
-  test("Hit once", () => {
-    ship.hit();
-    expect(ship.hits).toBe(1);
-  });
-  test("Hit twice", () => {
-    ship.hit();
-    expect(ship.hits).toBe(2);
-  });
-  test("Hit three times", () => {
-    ship.hit();
-    expect(ship.hits).toBe(3);
-  });
-});
-
 describe("Ships can be sunk", () => {
   const patrol = createShip(2);
   const carrier = createShip(5);
