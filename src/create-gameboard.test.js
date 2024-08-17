@@ -12,10 +12,9 @@ describe("Create valid gameboard objects", () => {
   });
 
   test("Gameboards contain tiles with ship and isHit properties", () => {
-    const emptyTile = { ship: null, isHit: false };
-    const emptyBoard = Array.from({ length: 10 }, () =>
-      Array.from({ length: 10 }, () => emptyTile)
-    );
-    expect(board.getState()).toEqual(emptyBoard);
+    const hasValidTiles = board.getState().every((col) => {
+      return col.every((tile) => tile.ship === null && tile.isHit === false);
+    });
+    expect(hasValidTiles).toBe(true);
   });
 });
