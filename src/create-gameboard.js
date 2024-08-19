@@ -2,7 +2,7 @@ import createShip from "./create-ship.js";
 
 export default function createGameboard() {
   const gameboard = Array.from({ length: 10 }, () =>
-    Array.from({ length: 10 }, () => ({ ship: null, isHit: false }))
+    Array.from({ length: 10 }, () => ({ ship: null, isShot: false }))
   );
 
   function placeShip(coordinates, direction, shipType) {
@@ -24,16 +24,32 @@ export default function createGameboard() {
     function sliceShipSize(coord) {
       const isPositiveFacing = direction === "up" || direction === "right";
       return isPositiveFacing
-        ? [coord, coord + ship.length + 1]
-        : [coord - ship.length, coord + 1];
+        ? [coord, coord + ship.length]
+        : [coord - ship.length + 1, coord + 1];
     }
   }
 
   return {
     placeShip,
     getState() {
+      // does not copy ships' methods
       const boardDeepCopy = JSON.parse(JSON.stringify(gameboard));
       return boardDeepCopy;
+    },
+    receiveAttack(coordinates) {
+      const [x, y] = [...coordinates];
+      const target = gameboard[x][y];
+      if (target.isShot)
+        throw new Error("Tile already shot", { cause: coordinates });
+      target.isShot = true;
+      if (target.ship) {
+        target.ship.hit();
+        if (target.ship.isSunk()) {
+          target.ship.sunk = true;
+        }
+        return true;
+      }
+      return false;
     },
   };
 }
