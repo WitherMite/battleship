@@ -59,9 +59,9 @@ describe("Gameboards can recieve attacks", () => {
     [9, 3],
     [4, 1],
   ])("Attack [%s,%s] and miss", (x, y) => {
-    const attackHit = board.receiveAttack([x, y]);
+    const attack = board.receiveAttack([x, y]);
     const boardState = board.getState();
-    const isSuccessfulMiss = boardState[x][y].isShot && !attackHit;
+    const isSuccessfulMiss = boardState[x][y].isShot && !attack.isHit;
     expect(isSuccessfulMiss).toBe(true);
   });
   test.each([
@@ -69,18 +69,14 @@ describe("Gameboards can recieve attacks", () => {
     [8, 2],
     [5, 2],
   ])("Attack [%s,%s] and hit", (x, y) => {
-    const attackHit = board.receiveAttack([x, y]);
+    const attack = board.receiveAttack([x, y]);
     const boardState = board.getState();
-    const isSuccessfulHit = boardState[x][y].isShot && attackHit;
+    const isSuccessfulHit = boardState[x][y].isShot && attack.isHit;
     expect(isSuccessfulHit).toBe(true);
   });
   test("Boards' ships sink", () => {
     board.receiveAttack([6, 2]);
-    const attackHit = board.receiveAttack([7, 2]);
-    const boardState = board.getState();
-    const boatFront = boardState[4][2].ship;
-    const boatBack = boardState[7][2].ship;
-    const boatIsSunk = boatFront.sunk && boatBack.sunk && attackHit;
-    expect(boatIsSunk).toBe(true);
+    const attack = board.receiveAttack([7, 2]);
+    expect(attack.sunkShip === "carrier").toBe(true);
   });
 });

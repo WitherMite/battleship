@@ -41,15 +41,16 @@ export default function createGameboard() {
       const target = gameboard[x][y];
       if (target.isShot)
         throw new Error("Tile already shot", { cause: coordinates });
+
+      const attack = { isHit: false, sunkShip: null };
       target.isShot = true;
       if (target.ship) {
-        target.ship.hit();
+        attack.isHit = target.ship.hit();
         if (target.ship.isSunk()) {
-          target.ship.sunk = true;
+          attack.sunkShip = target.ship.name;
         }
-        return true;
       }
-      return false;
+      return attack;
     },
   };
 }
