@@ -1,5 +1,4 @@
 import createGameboard from "./create-gameboard.js";
-import createShip from "./create-ship.js";
 
 describe("Create valid gameboard objects", () => {
   const board = createGameboard();
@@ -13,9 +12,10 @@ describe("Create valid gameboard objects", () => {
   });
 
   test("Gameboards contain tiles with ship and isShot properties", () => {
-    const hasValidTiles = board.getState().every((col) => {
-      return col.every((tile) => tile.ship === null && tile.isShot === false);
-    });
+    const hasValidTiles = board
+      .getState()
+      .flat()
+      .every((tile) => tile.ship === null && tile.isShot === false);
     expect(hasValidTiles).toBe(true);
   });
 });
@@ -78,5 +78,8 @@ describe("Gameboards can recieve attacks", () => {
     board.receiveAttack([6, 2]);
     const attack = board.receiveAttack([7, 2]);
     expect(attack.sunkShip === "carrier").toBe(true);
+  });
+  test("Cannot attack the same tile more than once", () => {
+    expect(() => board.receiveAttack([0, 0])).toThrow();
   });
 });
