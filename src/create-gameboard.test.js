@@ -48,11 +48,20 @@ describe("Ships can be placed on gameboards", () => {
       true
     );
   });
+
+  test("Ships cannot be partially off the board", () => {});
+
+  test("Ships cannot share tiles", () => {});
+
+  test("Can only place one of each ship type", () => {});
 });
 
 describe("Gameboards can recieve attacks", () => {
   const board = createGameboard();
   board.placeShip([4, 2], "right", "carrier");
+
+  test("Only full boards can be attacked", () => {});
+  // fill board
 
   test.each([
     [0, 0],
@@ -84,10 +93,12 @@ describe("Gameboards can recieve attacks", () => {
   });
 });
 
+describe("Gameboards report losses to listeners", () => {});
+
 test("Methods only accept valid coordinate pairs", () => {
   const board = createGameboard();
   expect(() => board.placeShip([10, 1], "right", "battleship")).toThrow();
-  expect(() => board.placeShip([-1, 1], "right", "battleship")).toThrow();
+  expect(() => board.placeShip([-1, 1], "up", "carrier")).toThrow();
   expect(() => board.receiveAttack([4, 12])).toThrow();
   expect(() => board.receiveAttack(["a", 1])).toThrow();
 });
