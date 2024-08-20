@@ -83,3 +83,11 @@ describe("Gameboards can recieve attacks", () => {
     expect(() => board.receiveAttack([0, 0])).toThrow();
   });
 });
+
+test("Methods only accept valid coordinate pairs", () => {
+  const board = createGameboard();
+  expect(() => board.placeShip([10, 1], "right", "battleship")).toThrow();
+  expect(() => board.placeShip([-1, 1], "right", "battleship")).toThrow();
+  expect(() => board.receiveAttack([4, 12])).toThrow();
+  expect(() => board.receiveAttack(["a", 1])).toThrow();
+});

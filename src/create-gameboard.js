@@ -1,11 +1,15 @@
 import createShip from "./create-ship.js";
 
+const boardSize = 10;
+
 export default function createGameboard() {
-  const gameboard = Array.from({ length: 10 }, () =>
-    Array.from({ length: 10 }, () => ({ ship: null, isShot: false }))
+  const gameboard = Array.from({ length: boardSize }, () =>
+    Array.from({ length: boardSize }, () => ({ ship: null, isShot: false }))
   );
 
   function placeShip(coordinates, direction, shipType) {
+    if (!areValidCoordinates(coordinates))
+      throw new Error("Invalid coordinate pair", { cause: coordinates });
     const ship = createShip(shipType);
     const [x, y] = [...coordinates];
     const isYAxis = direction === "up" || direction === "down";
@@ -37,6 +41,8 @@ export default function createGameboard() {
       return boardDeepCopy;
     },
     receiveAttack(coordinates) {
+      if (!areValidCoordinates(coordinates))
+        throw new Error("Invalid coordinate pair", { cause: coordinates });
       const [x, y] = [...coordinates];
       const target = gameboard[x][y];
       if (target.isShot)
@@ -53,4 +59,15 @@ export default function createGameboard() {
       return attack;
     },
   };
+}
+
+function areValidCoordinates(coords) {
+  return (
+    Array.isArray(coords) &&
+    coords.length === 2 &&
+    coords.every((n) => typeof n === "number") &&
+    coords.every((n) => n >= 0 && n % 1 === 0) &&
+    coords[0] < boardSize &&
+    coords[1] < boardSize
+  );
 }
