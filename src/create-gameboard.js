@@ -21,7 +21,7 @@ export default function createGameboard() {
     } else {
       const shipTiles = gameboard
         .slice(...sliceShipSize(x))
-        .map((row) => row[y]);
+        .map((col) => col[y]);
       shipTiles.forEach((tile) => (tile.ship = ship));
     }
 
