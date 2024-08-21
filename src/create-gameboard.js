@@ -15,15 +15,14 @@ export default function createGameboard() {
     const isYAxis = direction === "up" || direction === "down";
 
     // board is a 2d array so x axis is a bit more complicated to place on as you have to get the same index out of multiple arrays
-    if (isYAxis) {
-      const shipTiles = gameboard[x].slice(...sliceShipSize(y));
-      shipTiles.forEach((tile) => (tile.ship = ship));
-    } else {
-      const shipTiles = gameboard
-        .slice(...sliceShipSize(x))
-        .map((col) => col[y]);
-      shipTiles.forEach((tile) => (tile.ship = ship));
-    }
+    const shipTiles = isYAxis
+      ? gameboard[x].slice(...sliceShipSize(y))
+      : gameboard.slice(...sliceShipSize(x)).map((col) => col[y]);
+    if (shipTiles.some((tile) => !!tile.ship))
+      throw new Error("Ship would overlap another boat", {
+        cause: [coordinates, direction, shipType],
+      });
+    shipTiles.forEach((tile) => (tile.ship = ship));
 
     function sliceShipSize(coord) {
       const isPositiveFacing = direction === "up" || direction === "right";

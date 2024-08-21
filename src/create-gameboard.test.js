@@ -51,7 +51,10 @@ describe("Ships can be placed on gameboards", () => {
 
   test("Ships cannot be partially off the board", () => {});
 
-  test("Ships cannot share tiles", () => {});
+  test("Ships cannot share tiles", () => {
+    board.placeShip([6, 7], "left", "carrier");
+    expect(() => board.placeShip([1, 7], "right", "battleship")).toThrow();
+  });
 
   test("Can only place one of each ship type", () => {});
 });
