@@ -7,6 +7,7 @@ export default function createShip(type) {
     patrol: { name: "patrol", length: 2 },
   };
 
+  if (!shipTypes[type]) throw new Error("Invalid ship type", { cause: type });
   return {
     hits: 0,
     isSunk() {

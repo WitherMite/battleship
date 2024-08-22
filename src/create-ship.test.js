@@ -8,6 +8,9 @@ describe("Create valid ship objects", () => {
   test("Starts not sunk", () => {
     expect(ship.isSunk()).toBe(false);
   });
+  test("Errors when passed invalid ship type", () => {
+    expect(() => createShip("dstoyr")).toThrow();
+  });
 });
 
 describe("Creates different types of boats", () => {
