@@ -61,7 +61,10 @@ describe("Ships can be placed on gameboards", () => {
     expect(() => board.placeShip([1, 7], "right", "battleship")).toThrow();
   });
 
-  test("Can only place one of each ship type", () => {});
+  test("Can only place one of each ship type", () => {
+    board.placeShip([6, 7], "left", "carrier");
+    expect(() => board.placeShip([4, 2], "right", "carrier")).toThrow();
+  });
 });
 
 describe("Gameboards can recieve attacks", () => {

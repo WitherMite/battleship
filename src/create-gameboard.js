@@ -6,10 +6,19 @@ export default function createGameboard() {
   const gameboard = Array.from({ length: boardSize }, () =>
     Array.from({ length: boardSize }, () => ({ ship: null, isShot: false }))
   );
+  const activeShips = {
+    carrier: null,
+    battleship: null,
+    destroyer: null,
+    submarine: null,
+    patrol: null,
+  };
 
   function placeShip(coordinates, direction, shipType) {
     if (!areValidCoordinates(coordinates))
       throw new Error("Invalid coordinate pair", { cause: coordinates });
+    if (activeShips[shipType])
+      throw new Error("Ship already placed", { cause: shipType });
 
     const ship = createShip(shipType);
     const [x, y] = [...coordinates];
@@ -31,6 +40,7 @@ export default function createGameboard() {
         cause: [coordinates, direction, shipType],
       });
     shipTiles.forEach((tile) => (tile.ship = ship));
+    activeShips[shipType] = ship;
 
     function sliceShipSize(coord) {
       const isPositiveFacing = direction === "up" || direction === "right";
@@ -72,8 +82,7 @@ function areValidCoordinates(coords) {
   return (
     Array.isArray(coords) &&
     coords.length === 2 &&
-    coords.every((n) => typeof n === "number") &&
-    coords.every((n) => n >= 0 && n % 1 === 0) &&
+    coords.every((n) => typeof n === "number" && n >= 0 && n % 1 === 0) &&
     coords[0] < boardSize &&
     coords[1] < boardSize
   );
