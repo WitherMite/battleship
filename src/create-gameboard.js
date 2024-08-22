@@ -67,11 +67,11 @@ export default function createGameboard() {
 
       const attack = { isHit: false, sunkShip: null };
       target.isShot = true;
-      if (target.ship) {
+      if (!target.ship) return attack;
+
         attack.isHit = target.ship.hit();
         if (target.ship.isSunk()) {
           attack.sunkShip = target.ship.name;
-        }
       }
       return attack;
     },
