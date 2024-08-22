@@ -10,14 +10,22 @@ export default function createGameboard() {
   function placeShip(coordinates, direction, shipType) {
     if (!areValidCoordinates(coordinates))
       throw new Error("Invalid coordinate pair", { cause: coordinates });
+
     const ship = createShip(shipType);
     const [x, y] = [...coordinates];
     const isYAxis = direction === "up" || direction === "down";
+    const [sliceStart, sliceEnd] = [...sliceShipSize(isYAxis ? y : x)];
+
+    if (sliceStart < 0 || sliceEnd > boardSize)
+      throw new Error("Ship out of bounds", {
+        cause: [coordinates, direction, shipType],
+      });
 
     // board is a 2d array so x axis is a bit more complicated to place on as you have to get the same index out of multiple arrays
     const shipTiles = isYAxis
-      ? gameboard[x].slice(...sliceShipSize(y))
-      : gameboard.slice(...sliceShipSize(x)).map((col) => col[y]);
+      ? gameboard[x].slice(sliceStart, sliceEnd)
+      : gameboard.slice(sliceStart, sliceEnd).map((col) => col[y]);
+
     if (shipTiles.some((tile) => !!tile.ship))
       throw new Error("Ship would overlap another boat", {
         cause: [coordinates, direction, shipType],
