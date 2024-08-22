@@ -18,6 +18,13 @@ describe("Create valid gameboard objects", () => {
       .every((tile) => tile.ship === null && tile.isShot === false);
     expect(hasValidTiles).toBe(true);
   });
+
+  test("Methods only accept valid coordinate pairs", () => {
+    expect(() => board.placeShip([10, 1], "right", "battleship")).toThrow();
+    expect(() => board.placeShip([-1, 1], "up", "carrier")).toThrow();
+    expect(() => board.receiveAttack([4, 12])).toThrow();
+    expect(() => board.receiveAttack(["a", 1])).toThrow();
+  });
 });
 
 describe("Ships can be placed on gameboards", () => {
@@ -70,9 +77,10 @@ describe("Ships can be placed on gameboards", () => {
 describe("Gameboards can recieve attacks", () => {
   const board = createGameboard();
   board.placeShip([4, 2], "right", "carrier");
-
-  test("Only full boards can be attacked", () => {});
-  // fill board
+  board.placeShip([4, 4], "up", "battleship");
+  board.placeShip([8, 5], "down", "destroyer");
+  board.placeShip([2, 3], "left", "submarine");
+  board.placeShip([0, 8], "right", "patrol");
 
   test.each([
     [0, 0],
@@ -102,14 +110,11 @@ describe("Gameboards can recieve attacks", () => {
   test("Cannot attack the same tile more than once", () => {
     expect(() => board.receiveAttack([0, 0])).toThrow();
   });
+  test("Only full boards can be attacked", () => {
+    const board2 = createGameboard();
+    board2.placeShip([4, 2], "right", "carrier");
+    expect(() => board2.receiveAttack([4, 3])).toThrow();
+  });
 });
 
 describe("Gameboards report losses to listeners", () => {});
-
-test("Methods only accept valid coordinate pairs", () => {
-  const board = createGameboard();
-  expect(() => board.placeShip([10, 1], "right", "battleship")).toThrow();
-  expect(() => board.placeShip([-1, 1], "up", "carrier")).toThrow();
-  expect(() => board.receiveAttack([4, 12])).toThrow();
-  expect(() => board.receiveAttack(["a", 1])).toThrow();
-});
