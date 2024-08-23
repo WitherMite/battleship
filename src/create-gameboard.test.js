@@ -117,4 +117,24 @@ describe("Gameboards can recieve attacks", () => {
   });
 });
 
-describe("Gameboards report losses to listeners", () => {});
+describe("Gameboards report losses", () => {
+  const board = createGameboard();
+  board.placeShip([4, 2], "right", "carrier");
+  board.placeShip([4, 4], "up", "battleship");
+  board.placeShip([8, 5], "down", "destroyer");
+  board.placeShip([2, 3], "left", "submarine");
+  board.placeShip([0, 8], "right", "patrol");
+
+  const attack = (xy) => board.receiveAttack(xy);
+  /* prettier-ignore */ {
+  [[4,2],[5,2],[6,2],[7,2],[8,2]].forEach(attack);
+  [[4,4],[4,5],[4,6],[4,7]].forEach(attack);
+  [[8,5],[8,4],[8,3]].forEach(attack);
+  [[2,3],[1,3],[0,3]].forEach(attack);
+  [[0,8],[1,8]].forEach(attack);
+  }
+
+  test("Lose.", () => {
+    expect(board.isDefeat).toBe(true);
+  });
+});

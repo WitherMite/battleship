@@ -54,6 +54,7 @@ export default function createGameboard() {
   }
 
   return {
+    isDefeat: false,
     placeShip,
     getState() {
       // does not copy ships' methods
@@ -61,6 +62,7 @@ export default function createGameboard() {
       return boardDeepCopy;
     },
     receiveAttack(coordinates) {
+      if (this.isDefeat) throw new Error("All ships have been sunk");
       if (!allShipsPlaced) throw new Error("Some ships have not been placed");
       if (!areValidCoordinates(coordinates))
         throw new Error("Invalid coordinate pair", { cause: coordinates });
@@ -77,6 +79,9 @@ export default function createGameboard() {
       attack.isHit = target.ship.hit();
       if (target.ship.isSunk()) {
         attack.sunkShip = target.ship.name;
+        this.isDefeat = Object.values(activeShips).every((ship) =>
+          ship.isSunk()
+        );
       }
       return attack;
     },
