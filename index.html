@@ -4,8 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Battleship</title>
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <header>
+      <h1>Battleship</h1>
+      <!-- game overriding options here if needed-->
+    </header>
+    <main class="ui-container">
+      <!-- change content depending on game stage -->
+      <h2 class="directions"></h2>
+    </main>
+
+    <template id="menu-ui-template">
+      <!-- select cpu/irl opponent -->
+      <div class="menu-ui">
+        <form class="opponent-selection" novalidate></form>
+      </div>
+    </template>
+
+    <template id="pregame-ui-template">
+      <!-- player(s) place ships -->
+      <div class="pregame-ui">
+        <div class="player-board"></div>
+        <div class="ship-container"></div>
+      </div>
+    </template>
+
+    <template id="main-ui-template">
+      <!-- main gameplay -->
+      <div class="main-ui">
+        <div class="radar"></div>
+        <div class="player-board"></div>
+      </div>
+    </template>
+
     <script src="index.js" type="module"></script>
   </body>
 </html>
