@@ -11,9 +11,15 @@
       <h1>Battleship</h1>
       <!-- game overriding options here if needed-->
     </header>
-    <main class="ui-container">
+    <main class="game-window">
       <!-- change content depending on game stage -->
-      <h2 class="directions"></h2>
+      <h2 class="directions">Select coordinates to attack.</h2>
+      <div class="ui-container">
+        <div class="main-ui">
+          <div class="radar game-grid"></div>
+          <div class="player-board game-grid"></div>
+        </div>
+      </div>
     </main>
 
     <template id="menu-ui-template">
