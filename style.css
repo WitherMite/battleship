@@ -10,20 +10,30 @@ body {
     color: var(--font-color);
     background-color: var(--background-color);
     height: 100svh;
+    --header-height: 10svh;
+    --game-height: calc(100svh - var(--header-height));
 }
 
 header {
     padding: 1.5rem;
-    text-align: center;
+    height: var(--header-height);
     background-color: var(--secondary-color);
+    display: grid;
+    place-content: center;
 }
 
 .game-window {
     padding: 1.5rem;
+    height: var(--game-height);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
+}
+
+.ui-container {
+    width: 100%;
+    height: 100%;
 }
 
 .game-grid {
@@ -40,7 +50,7 @@ header {
     flex-wrap: wrap;
     gap: 1.5rem;
     justify-content: center;
-    padding-bottom: 1.5rem;
+    align-items: flex-end;
 }
 
 .radar {
@@ -49,10 +59,7 @@ header {
 }
 
 .player-board {
-    align-self: flex-end;
     flex: 1;
-    width: calc(75svw / 2.5);
-
     /* scales grid to never be bigger than radar when flexing */
     max-width: min(75svw, 75svh);
 }
