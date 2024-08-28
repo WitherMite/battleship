@@ -13,11 +13,11 @@
     </header>
     <main class="game-window">
       <!-- change content depending on game stage -->
-      <h2 class="directions">Select coordinates to attack.</h2>
+      <h2 class="directions">Place your ships</h2>
       <div class="ui-container">
-        <div class="main-ui">
-          <div class="radar game-grid"></div>
-          <div class="player-board game-grid"></div>
+        <div class="pregame-ui">
+          <div class="game-grid"></div>
+          <div class="ship-container"></div>
         </div>
       </div>
     </main>
@@ -32,7 +32,7 @@
     <template id="pregame-ui-template">
       <!-- player(s) place ships -->
       <div class="pregame-ui">
-        <div class="player-board"></div>
+        <div class="game-grid"></div>
         <div class="ship-container"></div>
       </div>
     </template>
@@ -40,8 +40,8 @@
     <template id="main-ui-template">
       <!-- main gameplay -->
       <div class="main-ui">
-        <div class="radar"></div>
-        <div class="player-board"></div>
+        <div class="radar game-grid"></div>
+        <div class="player-board game-grid"></div>
       </div>
     </template>
 
