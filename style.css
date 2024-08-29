@@ -3,6 +3,7 @@
 :root {
     --background-color: rgb(255, 255, 255);
     --secondary-color: rgb(243, 243, 243);
+    --focus-color: rgb(221, 221, 221);
     --font-color: rgb(80, 80, 80);
 }
 
@@ -87,3 +88,34 @@ header {
     try using an @container rule to place ships in ship container differently 
     when inline or below board
 */
+
+/* Player menu */
+
+.menu-ui {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.opponent-selection {
+    margin-top: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.menu-btn {
+    font-size: 1.25rem;
+    background-color: var(--secondary-color);
+    border: 2px solid var(--font-color);
+    border-radius: 8px;
+    padding: 3rem 1.5rem;
+}
+
+.menu-btn:hover {
+    background-color: var(--focus-color);
+}
+
+.p2-info {
+    text-align: center;
+}
