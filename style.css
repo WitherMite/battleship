@@ -71,7 +71,7 @@ header {
     flex-wrap: wrap;
     gap: 1.5rem;
     justify-content: center;
-    /* clamps width of ship container to 25svh when inline with gameboard */
+    /* clamps width of ship container to 250px when inline with gameboard */
     max-width: calc(min(75svw, 75svh) + calc(1.5rem + 250px));
 }
 
