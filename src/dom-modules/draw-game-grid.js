@@ -43,9 +43,9 @@ function createGrid(gridSize) {
   div.style.display = "grid";
   div.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
 
-  for (let x = 0; x < gridSize; x++) {
-    // create y axis in reverse to put origin in bottom left
-    for (let y = gridSize - 1; y >= 0; y--) {
+  // create y axis in reverse to put origin in bottom left
+  for (let y = gridSize - 1; y >= 0; y--) {
+    for (let x = 0; x < gridSize; x++) {
       const tile = document.createElement("div");
       tile.classList.add("game-tile");
       tile.dataset.coordinate = [x, y];
