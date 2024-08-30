@@ -40,12 +40,38 @@ header {
 }
 
 .game-grid {
-    background-color: var(--secondary-color);
-    border: 2px solid var(--font-color);
     aspect-ratio: 1;
     min-width: 250px;
     width: 75svw;
     max-width: 75svh;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.game-tile-container {
+    background-color: var(--secondary-color);
+    border-bottom: 2px solid var(--font-color);
+    border-right: 2px solid var(--font-color);
+}
+
+.game-tile {
+    border-top: 2px solid var(--font-color);
+    border-left: 2px solid var(--font-color);
+}
+
+.grid-label-top,
+.grid-label-left {
+    display: flex;
+}
+
+.grid-label-left {
+    flex-direction: column;
+}
+
+.label-tile {
+    flex: 1;
+    display: grid;
+    place-content: center;
 }
 
 /* Main Gameplay UI */
@@ -56,6 +82,9 @@ header {
     gap: 1.5rem;
     justify-content: center;
     align-items: flex-end;
+
+    /* makes ui look more centered on desktop taking whitespace into account, barely noticable on mobile */
+    margin-right: 5%;
 }
 
 .player-board {
