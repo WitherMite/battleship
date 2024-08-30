@@ -84,7 +84,7 @@ header {
     align-items: flex-end;
 
     /* makes ui look more centered on desktop taking whitespace into account, barely noticable on mobile */
-    margin-right: 5%;
+    margin-right: 3.75%;
 }
 
 .player-board {
