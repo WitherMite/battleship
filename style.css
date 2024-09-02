@@ -55,8 +55,27 @@ header {
 }
 
 .game-tile {
+    position: relative;
     border-top: 2px solid var(--font-color);
     border-left: 2px solid var(--font-color);
+}
+
+.hit,
+.miss {
+    --radius: 45%;
+    --offset: calc(calc(100% - var(--radius)) / 2);
+    position: absolute;
+    aspect-ratio: 1;
+    width: var(--radius);
+    top: var(--offset);
+    left: var(--offset);
+    border-radius: 100%;
+    border: 2px solid var(--font-color);
+}
+
+.hit {
+    background-color: red;
+    border-color: red;
 }
 
 .grid-label-top,
@@ -72,6 +91,21 @@ header {
     flex: 1;
     display: grid;
     place-content: center;
+}
+
+.patrol,
+.submarine,
+.destroyer,
+.battleship,
+.carrier {
+    background-color: var(--font-color);
+}
+
+.sunk {
+    z-index: 1;
+    background-color: rgb(117, 0, 0);
+    border: none;
+    outline: 1px solid rgb(117, 0, 0);
 }
 
 /* Main Gameplay UI */

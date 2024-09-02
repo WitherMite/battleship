@@ -10,7 +10,17 @@ export default async function playBattleship(gameUI /* winListeners */) {
   // decide which player goes first
   // loop until game ends: (find a good way to end loop)
   //   render gameboards (remove ships from opponent board somewhere first?)
-  gameUI.render(playerTwo.board.getState(), playerOne.board.getState());
+  playerOne.board.receiveAttack([5, 6]);
+  playerOne.board.receiveAttack([4, 6]);
+  playerOne.board.receiveAttack([2, 5]);
+  [
+    [4, 2],
+    [5, 2],
+    [6, 2],
+    [7, 2],
+    [8, 2],
+  ].forEach((xy) => playerOne.board.receiveAttack(xy));
+  gameUI.render(playerOne.board.getState(), playerTwo.board.getState());
   //   listen for player attack
   //     send attack to opponent, render attack results, remove listener
   //   listen for turn to end
