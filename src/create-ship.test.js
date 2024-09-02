@@ -6,7 +6,7 @@ describe("Create valid ship objects", () => {
     expect(ship.hits).toBe(0);
   });
   test("Starts not sunk", () => {
-    expect(ship.isSunk()).toBe(false);
+    expect(ship.isSunk).toBe(false);
   });
   test("Errors when passed invalid ship type", () => {
     expect(() => createShip("dstoyr")).toThrow();
@@ -46,17 +46,17 @@ describe("Ships are sunk when hits equal length", () => {
   test("Sink patrol", () => {
     patrol.hit();
     patrol.hit();
-    expect(patrol.isSunk()).toBe(true);
+    expect(patrol.isSunk).toBe(true);
   });
   test("Fail to sink carrier", () => {
     carrier.hit();
     carrier.hit();
-    expect(carrier.isSunk()).toBe(false);
+    expect(carrier.isSunk).toBe(false);
   });
   test("Sink carrier", () => {
     carrier.hit();
     carrier.hit();
     carrier.hit();
-    expect(carrier.isSunk()).toBe(true);
+    expect(carrier.isSunk).toBe(true);
   });
 });

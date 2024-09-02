@@ -10,11 +10,10 @@ export default function createShip(type) {
   if (!shipTypes[type]) throw new Error("Invalid ship type", { cause: type });
   return {
     hits: 0,
-    isSunk() {
-      return this.hits >= this.length;
-    },
+    isSunk: false,
     hit() {
       this.hits++;
+      if (this.hits >= this.length) this.isSunk = true;
       return true;
     },
     ...shipTypes[type],

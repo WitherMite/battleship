@@ -77,11 +77,9 @@ export default function createGameboard() {
       if (!target.ship) return attack;
 
       attack.isHit = target.ship.hit();
-      if (target.ship.isSunk()) {
+      if (target.ship.isSunk) {
         attack.sunkShip = target.ship.name;
-        this.isDefeat = Object.values(activeShips).every((ship) =>
-          ship.isSunk()
-        );
+        this.isDefeat = Object.values(activeShips).every((ship) => ship.isSunk);
       }
       return attack;
     },
