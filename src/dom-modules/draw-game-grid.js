@@ -1,4 +1,6 @@
 export default function drawGameGrid(gridElement, gridSize) {
+  while (gridElement.firstChild)
+    gridElement.removeChild(gridElement.firstChild);
   gridElement.style.gridTemplateColumns = `1fr ${gridSize + 1}fr`;
   gridElement.style.gridTemplateRows = `1fr ${gridSize + 1}fr`;
 
