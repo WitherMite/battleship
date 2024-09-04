@@ -10,8 +10,8 @@ export default function createEvent() {
       const fnIndex = listeners.findIndex((listener) => listener === fn);
       listeners.splice(fnIndex, 1);
     },
-    send(payload) {
-      listeners.forEach((fn) => fn(payload));
+    send(...payload) {
+      listeners.forEach((fn) => fn(...payload));
     },
   };
 }
