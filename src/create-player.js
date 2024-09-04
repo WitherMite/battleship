@@ -1,6 +1,6 @@
 import createGameboard from "./create-gameboard.js";
 
-export default function createPlayer() {
+export default function createPlayer(/* input handlers */) {
   const board = createGameboard();
   // temporary setup
   board.placeShip([4, 2], "right", "carrier");
@@ -11,5 +11,7 @@ export default function createPlayer() {
 
   return {
     board,
+    // method to get radar version of board
+    // control methods (pass return vals from inputs, get pov type)
   };
 }

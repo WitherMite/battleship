@@ -1,10 +1,12 @@
 import createBrowserGameUI from "./src/dom-modules/create-browser-game-ui.js";
-import playBattleship from "./src/play-battleship.js";
+import Battleship from "./src/battleship.js";
 
-playBattleship(createBrowserGameUI());
+const battleship = Battleship();
+const gameUI = createBrowserGameUI();
+battleship.attachRenderer(gameUI.render);
+battleship.play();
 
 // TODO list:
-//   change playBattleship to be event based instead of dep. injection
 //   get game loop working
 //   dont hardcode game config (boardsize, ships, etc.)
-//   document api for playBattleship fn
+//   document api for Battleship fn
