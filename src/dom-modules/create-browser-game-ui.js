@@ -1,5 +1,6 @@
 import drawGameGrid from "./draw-game-grid.js";
 import renderGameboard from "./render-gameboard.js";
+import playerAttack from "./player-attack.js";
 const gameWindow = document.querySelector(".game-window");
 
 export default function createBrowserGameUI() {
@@ -18,6 +19,13 @@ export default function createBrowserGameUI() {
         );
         renderGameboard(playerRadar, radarState);
       }
+    },
+
+    createPlayerInput() {
+      return {
+        povType: "human",
+        attack: playerAttack,
+      };
     },
   };
 }

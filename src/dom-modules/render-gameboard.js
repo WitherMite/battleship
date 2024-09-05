@@ -26,5 +26,8 @@ function renderTile(tileEle, tileInfo) {
       peg.classList.add("hit");
     } else peg.classList.add("miss");
     tileEle.appendChild(peg);
+    // remove coordinate from tile
+    // - can't shoot tiles twice, and pegs get in the way of listener anyway
+    delete tileEle.dataset.coordinate;
   }
 }

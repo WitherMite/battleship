@@ -1,9 +1,9 @@
 import createEvent from "./create-event.js";
 import createPlayer from "./create-player.js";
 
-export default function Battleship(/* playerOneInput, playerTwoInput */) {
-  const playerOne = createPlayer(/* playerOneInput */);
-  const playerTwo = createPlayer(/* playerTwoInput */);
+export default function Battleship(playerOneInput, playerTwoInput) {
+  const playerOne = createPlayer(playerOneInput);
+  const playerTwo = createPlayer(playerTwoInput);
   const render = createEvent();
   // temp setup to check renderer
   playerOne.board.receiveAttack([5, 6]);
@@ -21,8 +21,11 @@ export default function Battleship(/* playerOneInput, playerTwoInput */) {
     // render gameboards based on player's pov type
     render.send(player.board.getState(), opponent.board.getState());
     // await player attack
+    const attack = await player.attack();
     //   send attack to opponent, render attack results
-    // await turn to end
+    opponent.board.receiveAttack(attack);
+    render.send(player.board.getState(), opponent.board.getState());
+    playRound(); /* temp */
     //   change pov to opponent
     // if win send win event
     // else playRound(opponent, player)
