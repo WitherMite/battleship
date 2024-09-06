@@ -5,7 +5,7 @@ export default function Battleship(playerOneInput, playerTwoInput) {
   const playerOne = createPlayer(playerOneInput);
   const playerTwo = createPlayer(playerTwoInput);
   const render = createEvent();
-  // temp setup to check renderer
+  // temp setup for checking DOM
   playerOne.board.receiveAttack([5, 6]);
   playerOne.board.receiveAttack([4, 6]);
   playerOne.board.receiveAttack([2, 5]);
@@ -20,15 +20,17 @@ export default function Battleship(playerOneInput, playerTwoInput) {
   async function playRound(player = playerOne, opponent = playerTwo) {
     // render gameboards based on player's pov type
     render.send(player.board.getState(), opponent.getRadar());
-    // await player attack
+
     const attack = await player.attack();
-    //   send attack to opponent, render attack results
     opponent.board.receiveAttack(attack);
     render.send(player.board.getState(), opponent.getRadar());
-    playRound(); /* temp */
-    //   change pov to opponent
-    // if win send win event
-    // else playRound(opponent, player)
+    if (opponent.board.isDefeat) {
+      // change to emit a win event
+      setTimeout(alert, 200, "You win!");
+      return;
+    }
+    // use something other than a timeout to change turns
+    setTimeout(playRound, 800, opponent, player);
   }
   return {
     attachRenderer: render.addListener,
