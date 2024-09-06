@@ -11,7 +11,16 @@ export default function createPlayer(input) {
 
   return {
     board,
-    // method to get radar version of board
+    getRadar() {
+      const boardState = board.getState();
+      const radar = boardState.map((col) =>
+        col.map((tile) => {
+          if (!tile.ship?.isSunk) tile.ship = null;
+          return tile;
+        })
+      );
+      return radar;
+    },
     // control methods (pass return vals from inputs, get pov type)
     povType: input.povType,
     attack: input.attack,

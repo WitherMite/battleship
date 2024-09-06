@@ -19,12 +19,12 @@ export default function Battleship(playerOneInput, playerTwoInput) {
 
   async function playRound(player = playerOne, opponent = playerTwo) {
     // render gameboards based on player's pov type
-    render.send(player.board.getState(), opponent.board.getState());
+    render.send(player.board.getState(), opponent.getRadar());
     // await player attack
     const attack = await player.attack();
     //   send attack to opponent, render attack results
     opponent.board.receiveAttack(attack);
-    render.send(player.board.getState(), opponent.board.getState());
+    render.send(player.board.getState(), opponent.getRadar());
     playRound(); /* temp */
     //   change pov to opponent
     // if win send win event
