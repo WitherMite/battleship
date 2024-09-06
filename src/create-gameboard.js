@@ -4,7 +4,7 @@ const boardSize = 10;
 
 export default function createGameboard() {
   const gameboard = Array.from({ length: boardSize }, () =>
-    Array.from({ length: boardSize }, () => ({ ship: null, isShot: false }))
+    Array.from({ length: boardSize }, () => ({ ship: null, shot: null }))
   );
   const activeShips = {
     carrier: null,
@@ -69,19 +69,19 @@ export default function createGameboard() {
 
       const [x, y] = [...coordinates];
       const target = gameboard[x][y];
-      if (target.isShot)
+      if (target.shot)
         throw new Error("Tile already shot", { cause: coordinates });
 
-      const attack = { isHit: false, sunkShip: null };
-      target.isShot = true;
-      if (!target.ship) return attack;
+      target.shot = { isHit: true };
+      if (!target.ship) {
+        target.shot.isHit = false;
+        return;
+      }
 
-      attack.isHit = target.ship.hit();
+      target.ship.hit();
       if (target.ship.isSunk) {
-        attack.sunkShip = target.ship.name;
         this.isDefeat = Object.values(activeShips).every((ship) => ship.isSunk);
       }
-      return attack;
     },
   };
 }

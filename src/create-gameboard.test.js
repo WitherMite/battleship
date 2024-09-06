@@ -15,7 +15,7 @@ describe("Create valid gameboard objects", () => {
     const hasValidTiles = board
       .getState()
       .flat()
-      .every((tile) => tile.ship === null && tile.isShot === false);
+      .every((tile) => tile.ship === null && !tile.shot);
     expect(hasValidTiles).toBe(true);
   });
 
@@ -87,9 +87,9 @@ describe("Gameboards can recieve attacks", () => {
     [9, 3],
     [4, 1],
   ])("Attack [%s,%s] and miss", (x, y) => {
-    const attack = board.receiveAttack([x, y]);
+    board.receiveAttack([x, y]);
     const boardState = board.getState();
-    const isSuccessfulMiss = boardState[x][y].isShot && !attack.isHit;
+    const isSuccessfulMiss = boardState[x][y].shot.isHit === false;
     expect(isSuccessfulMiss).toBe(true);
   });
   test.each([
@@ -97,15 +97,16 @@ describe("Gameboards can recieve attacks", () => {
     [8, 2],
     [5, 2],
   ])("Attack [%s,%s] and hit", (x, y) => {
-    const attack = board.receiveAttack([x, y]);
+    board.receiveAttack([x, y]);
     const boardState = board.getState();
-    const isSuccessfulHit = boardState[x][y].isShot && attack.isHit;
+    const isSuccessfulHit = boardState[x][y].shot.isHit;
     expect(isSuccessfulHit).toBe(true);
   });
   test("Boards' ships sink", () => {
     board.receiveAttack([6, 2]);
-    const attack = board.receiveAttack([7, 2]);
-    expect(attack.sunkShip === "carrier").toBe(true);
+    board.receiveAttack([7, 2]);
+    const boardState = board.getState();
+    expect(boardState[7][2].ship.isSunk).toBe(true);
   });
   test("Cannot attack the same tile more than once", () => {
     expect(() => board.receiveAttack([0, 0])).toThrow();

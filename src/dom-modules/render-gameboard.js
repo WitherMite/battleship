@@ -20,9 +20,9 @@ function renderTile(tileEle, tileInfo) {
     if (tileInfo.ship.isSunk) tileEle.classList.add("sunk");
   }
 
-  if (tileInfo.isShot) {
+  if (tileInfo.shot) {
     const peg = document.createElement("div");
-    if (tileInfo.ship) {
+    if (tileInfo.shot.isHit) {
       peg.classList.add("hit");
     } else peg.classList.add("miss");
     tileEle.appendChild(peg);
