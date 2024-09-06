@@ -19,8 +19,7 @@ describe("Uses injected input to pass actions", () => {
 describe("Provides a radar version of its board", () => {
   let player;
   beforeEach(() => {
-    const input = { povType: "", attack() {} };
-    player = createPlayer(input);
+    player = createPlayer();
     // player.board.placeShip([4, 2], "right", "carrier");
     // player.board.placeShip([4, 4], "up", "battleship");
     // player.board.placeShip([8, 5], "down", "destroyer");
