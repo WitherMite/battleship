@@ -22,8 +22,7 @@ export default function Battleship(playerOneInput, playerTwoInput) {
       setTimeout(alert, 200, "Game is over");
       return;
     }
-    // use something other than a timeout to change turns
-    setTimeout(playRound, 200, opponent, player);
+    playRound(opponent, player);
   }
   return {
     attachRenderer: render.addListener,

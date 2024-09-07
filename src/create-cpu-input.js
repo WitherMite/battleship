@@ -9,7 +9,15 @@ export default function createCPUInput(boardSize) {
     povType: "computer",
     attack() {
       const atkIndex = Math.floor(Math.random() * attacks.length - 1);
-      return attacks.splice(atkIndex, 1)[0];
+      const attack = attacks.splice(atkIndex, 1)[0];
+      return new Promise((resolve) => {
+        setTimeout(resolve, getRandomDelay(), attack);
+      });
     },
   };
+}
+
+// having a computer instantly play when you do doesnt feel great
+function getRandomDelay() {
+  return Math.floor(Math.random() * 200) + 150;
 }
