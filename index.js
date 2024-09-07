@@ -9,6 +9,8 @@ battleship.play();
 
 // TODO list:
 //   finish battleship todo's
+//   make cpu ai better
 //   dont hardcode game config (boardsize, ships, etc.)
-//   better ship icons
+//   add player names, allow real players to add thiers
 //   document api for Battleship fn
+//   better ship icons
