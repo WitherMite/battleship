@@ -8,7 +8,6 @@ battleship.attachRenderer(gameUI.render);
 battleship.play();
 
 // TODO list:
-//   add computer player
 //   finish battleship todo's
 //   dont hardcode game config (boardsize, ships, etc.)
 //   better ship icons
