@@ -5,6 +5,7 @@ export default function Battleship(playerOneInput, playerTwoInput) {
   const playerOne = createPlayer(playerOneInput);
   const playerTwo = createPlayer(playerTwoInput);
   const render = createEvent();
+  const win = createEvent();
 
   async function playRound(player = playerOne, opponent = playerTwo) {
     const [getBoard, getRadar] =
@@ -18,16 +19,15 @@ export default function Battleship(playerOneInput, playerTwoInput) {
     render.send(getBoard(), getRadar());
 
     if (opponent.board.isDefeat) {
-      // change to emit a win event
-      setTimeout(alert, 200, "Game is over");
-      return;
+      return win.send(player);
     }
-    playRound(opponent, player);
+    return playRound(opponent, player);
   }
   return {
     attachRenderer: render.addListener,
     removeRenderer: render.removeListener,
-    // methods to set/remove win listeners
+    addWinListener: win.addListener,
+    removeWinListener: win.removeListener,
     play() {
       // place ships
       // choose which player goes first
