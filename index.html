@@ -15,9 +15,18 @@
       <!-- change content depending on game stage -->
       <h2 class="directions"></h2>
       <div class="ui-container">
-        <div class="main-ui">
-          <div class="radar game-grid"></div>
+        <div class="pregame-ui">
           <div class="player-board game-grid"></div>
+          <div class="ship-container">
+            <!-- temp form -->
+            <form action="" class="place-ship-form">
+              <input type="text" class="temp-x-input" required />
+              <input type="text" class="temp-y-input" required />
+              <input type="text" class="temp-direction-input" required />
+              <input type="text" class="temp-ship-input" required />
+              <button class="place-ship-btn" type="submit">place ship</button>
+            </form>
+          </div>
         </div>
       </div>
     </main>
@@ -40,7 +49,7 @@
     <template id="pregame-ui-template">
       <!-- player(s) place ships -->
       <div class="pregame-ui">
-        <div class="game-grid"></div>
+        <div class="player-board game-grid"></div>
         <div class="ship-container"></div>
       </div>
     </template>

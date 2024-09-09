@@ -1,4 +1,5 @@
 import createShip from "./create-ship.js";
+import createEvent from "./create-event.js";
 
 const boardSize = 10;
 
@@ -13,7 +14,9 @@ export default function createGameboard() {
     submarine: null,
     patrol: null,
   };
+  const shipsPlacedEvent = createEvent();
   let allShipsPlaced = false;
+  shipsPlacedEvent.addListener(() => (allShipsPlaced = true));
 
   function placeShip(coordinates, direction, shipType) {
     if (!areValidCoordinates(coordinates))
@@ -24,6 +27,13 @@ export default function createGameboard() {
     const ship = createShip(shipType);
     const [x, y] = [...coordinates];
     const isYAxis = direction === "up" || direction === "down";
+
+    function sliceShipSize(coord) {
+      const isPositiveFacing = direction === "up" || direction === "right";
+      return isPositiveFacing
+        ? [coord, coord + ship.length]
+        : [coord - ship.length + 1, coord + 1];
+    }
     const [sliceStart, sliceEnd] = [...sliceShipSize(isYAxis ? y : x)];
 
     if (sliceStart < 0 || sliceEnd > boardSize)
@@ -43,19 +53,15 @@ export default function createGameboard() {
 
     shipTiles.forEach((tile) => (tile.ship = ship));
     activeShips[shipType] = ship;
-    allShipsPlaced = Object.values(activeShips).every((ship) => !!ship);
-
-    function sliceShipSize(coord) {
-      const isPositiveFacing = direction === "up" || direction === "right";
-      return isPositiveFacing
-        ? [coord, coord + ship.length]
-        : [coord - ship.length + 1, coord + 1];
-    }
+    if (Object.values(activeShips).every((ship) => !!ship))
+      shipsPlacedEvent.send();
   }
 
   return {
     isDefeat: false,
     placeShip,
+    addShipsPlacedListener: shipsPlacedEvent.addListener,
+    removeShipsPlacedListener: shipsPlacedEvent.removeListener,
     getState() {
       // does not copy ships' methods
       const boardDeepCopy = JSON.parse(JSON.stringify(gameboard));

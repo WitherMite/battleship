@@ -1,6 +1,7 @@
 import drawGameGrid from "./draw-game-grid.js";
 import renderGameboard from "./render-gameboard.js";
 import playerAttack from "./player-attack.js";
+import playerPlaceShips from "./player-place-ships.js";
 const gameWindow = document.querySelector(".game-window");
 const winDialog = document.querySelector(".win-popup");
 
@@ -33,9 +34,11 @@ export default function createBrowserGameUI() {
       return {
         povType: "human",
         attack: playerAttack,
+        placeShips: playerPlaceShips,
         name: (() => {
           // change name input
-          const name = prompt("Pick a name");
+          const name =
+            ""; /* prompt("Pick a name") - the blocking is annoying */
           return name ? name : "Player";
         })(),
       };

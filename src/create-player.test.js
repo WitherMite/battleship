@@ -20,11 +20,11 @@ describe("Provides a radar version of its board", () => {
   let player;
   beforeEach(() => {
     player = createPlayer();
-    // player.board.placeShip([4, 2], "right", "carrier");
-    // player.board.placeShip([4, 4], "up", "battleship");
-    // player.board.placeShip([8, 5], "down", "destroyer");
-    // player.board.placeShip([2, 3], "left", "submarine");
-    // player.board.placeShip([0, 8], "right", "patrol");
+    player.board.placeShip([4, 2], "right", "carrier");
+    player.board.placeShip([4, 4], "up", "battleship");
+    player.board.placeShip([8, 5], "down", "destroyer");
+    player.board.placeShip([2, 3], "left", "submarine");
+    player.board.placeShip([0, 8], "right", "patrol");
   });
 
   test("Same size as its board", () => {

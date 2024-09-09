@@ -121,7 +121,7 @@ header {
     margin-right: 3.75%;
 }
 
-.player-board {
+.main-ui .player-board {
     flex: 1;
     /* scales grid to never be bigger than radar when flexing */
     max-width: min(75svw, 75svh);
