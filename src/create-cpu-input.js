@@ -6,6 +6,7 @@ export default function createCPUInput(boardSize) {
     }
   }
   return {
+    name: "Computer",
     povType: "computer",
     attack() {
       const atkIndex = Math.floor(Math.random() * attacks.length - 1);

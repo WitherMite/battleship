@@ -21,7 +21,7 @@ export default function Battleship(playerOneInput, playerTwoInput) {
     if (opponent.board.isDefeat) {
       return win.send(player);
     }
-    return playRound(opponent, player);
+    playRound(opponent, player);
   }
   return {
     attachRenderer: render.addListener,

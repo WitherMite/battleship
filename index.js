@@ -5,6 +5,7 @@ import Battleship from "./src/battleship.js";
 const gameUI = createBrowserGameUI();
 const battleship = Battleship(gameUI.createPlayerInput(), createCPUInput(10));
 battleship.attachRenderer(gameUI.render);
+battleship.addWinListener(gameUI.showWinDialog);
 battleship.play();
 
 // TODO list:
