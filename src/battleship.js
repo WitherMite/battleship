@@ -16,13 +16,15 @@ export default async function Battleship(
     const renderCallback = () => {
       render.send(player.board.getState());
     };
+    const stopEvent = createEvent();
     return new Promise((resolve) => {
       player.board.addShipsPlacedListener(function fn() {
         player.board.removeShipsPlacedListener(fn);
+        stopEvent.send();
         resolve(true);
       });
       renderCallback();
-      player.placeShips(renderCallback);
+      player.placeShips(renderCallback, stopEvent);
     });
   }
 
@@ -48,9 +50,10 @@ export default async function Battleship(
     addWinListener: win.addListener,
     removeWinListener: win.removeListener,
     async play() {
-      // change ui to board setup
+      // change ui to board setup (if player is computer, render differently)
       // place ships
       await placeAllShips(playerOne);
+      // change ui to board setup
       await placeAllShips(playerTwo);
       // change ui to gameplay
       // choose which player goes first?

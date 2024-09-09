@@ -1,8 +1,9 @@
 const form = document.querySelector(".place-ship-form");
 
-export default function playerPlaceShips(renderBoard) {
+export default function playerPlaceShips(renderBoard, stopEvent) {
   // replace with better UI
-  form.addEventListener("submit", (e) => {
+  const player = this;
+  function getInput(e) {
     e.preventDefault();
     const coordinate = [
       Number(document.querySelector(".temp-x-input").value) - 1,
@@ -10,8 +11,14 @@ export default function playerPlaceShips(renderBoard) {
     ];
     const direction = document.querySelector(".temp-direction-input").value;
     const shipType = document.querySelector(".temp-ship-input").value;
-    this.board.placeShip(coordinate, direction, shipType);
+    player.board.placeShip(coordinate, direction, shipType);
     renderBoard();
     form.reset();
+    document.querySelector(".temp-x-input").focus();
+  }
+  form.addEventListener("submit", getInput);
+  stopEvent.addListener(function onStop() {
+    stopEvent.removeListener(onStop);
+    form.removeEventListener("submit", getInput);
   });
 }
