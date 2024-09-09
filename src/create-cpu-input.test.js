@@ -9,7 +9,7 @@ describe("Returns a valid input object for players", () => {
     expect(cpu.povType).toBe("computer");
   });
 
-  test("Attack method returns a valid gameboard coordinate", () => {
+  test("Attack method returns a valid gameboard coordinate", async () => {
     function areValidCoordinates(coords) {
       return (
         Array.isArray(coords) &&
@@ -19,12 +19,13 @@ describe("Returns a valid input object for players", () => {
         )
       );
     }
-    expect(areValidCoordinates(cpu.attack())).toBe(true);
+    const attack = await cpu.attack();
+    expect(areValidCoordinates(attack)).toBe(true);
   });
 
-  test("Attack method will never return any repeat coordinates", () => {
-    const cpu2 = createCPUInput(boardSize);
-    const exampleAtk = cpu2.attack();
+  test("Attack method will never return any repeat coordinates", async () => {
+    const cpu2 = createCPUInput(boardSize, () => 0);
+    const exampleAtk = await cpu2.attack();
 
     function areEqualNumArrays(arr1, arr2) {
       return (
@@ -37,7 +38,8 @@ describe("Returns a valid input object for players", () => {
 
     let hasRepeated = false;
     for (let i = 0; i < boardSize ** 2 - 1; i++) {
-      hasRepeated = areEqualNumArrays(cpu2.attack(), exampleAtk);
+      hasRepeated = areEqualNumArrays(await cpu2.attack(), exampleAtk);
+      if (hasRepeated) break;
     }
     expect(hasRepeated).toBe(false);
   });

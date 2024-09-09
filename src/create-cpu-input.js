@@ -1,4 +1,4 @@
-export default function createCPUInput(boardSize) {
+export default function createCPUInput(boardSize, delay = getRandomDelay) {
   const attacks = [];
   for (let x = 0; x < boardSize; x++) {
     for (let y = 0; y < boardSize; y++) {
@@ -12,7 +12,7 @@ export default function createCPUInput(boardSize) {
       const atkIndex = Math.floor(Math.random() * attacks.length - 1);
       const attack = attacks.splice(atkIndex, 1)[0];
       return new Promise((resolve) => {
-        setTimeout(resolve, getRandomDelay(), attack);
+        setTimeout(resolve, delay(), attack);
       });
     },
   };
