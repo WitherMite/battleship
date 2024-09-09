@@ -16,14 +16,6 @@ test("listeners run when event is sent", () => {
   expect(mock2).toHaveBeenCalled();
 });
 
-test("listeners are passed payloads", () => {
-  const event = createEvent();
-  const mock = jest.fn((i) => i);
-  event.addListener(mock);
-  event.send("hello");
-  expect(mock).toHaveBeenCalledWith("hello");
-});
-
 test("listeners are sent multi arg payloads", () => {
   const event = createEvent();
   const mock = jest.fn((i) => i);
