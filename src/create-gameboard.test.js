@@ -72,6 +72,20 @@ describe("Ships can be placed on gameboards", () => {
     board.placeShip([6, 7], "left", "carrier");
     expect(() => board.placeShip([4, 2], "right", "carrier")).toThrow();
   });
+
+  describe("Provides a list of unplaced ship type strings", () => {
+    const ships = ["carrier", "battleship", "destroyer", "submarine", "patrol"];
+    ships.forEach((ship) =>
+      test(`List contains ${ship}`, () => {
+        expect(board.getUnplacedShips()).toContain(ship);
+      })
+    );
+
+    test("Placed ships are not in list", () => {
+      board.placeShip([6, 7], "left", "carrier");
+      expect(board.getUnplacedShips()).not.toContain("carrier");
+    });
+  });
 });
 
 describe("Gameboards can recieve attacks", () => {

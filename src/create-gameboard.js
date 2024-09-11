@@ -67,6 +67,9 @@ export default function createGameboard() {
       const boardDeepCopy = JSON.parse(JSON.stringify(gameboard));
       return boardDeepCopy;
     },
+    getUnplacedShips() {
+      return Object.keys(activeShips).filter((k) => activeShips[k] === null);
+    },
     receiveAttack(coordinates) {
       if (this.isDefeat) throw new Error("All ships have been sunk");
       if (!allShipsPlaced) throw new Error("Some ships have not been placed");
