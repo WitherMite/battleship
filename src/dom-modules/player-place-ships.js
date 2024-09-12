@@ -1,8 +1,8 @@
-const form = document.querySelector(".place-ship-form");
-
 export default function playerPlaceShips(renderBoard, stopEvent) {
-  // replace with better UI
   const player = this;
+
+  // replace with better UI
+  const form = document.querySelector(".place-ship-form");
   function getInput(e) {
     e.preventDefault();
     const coordinate = [

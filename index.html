@@ -14,21 +14,7 @@
     <main class="game-window">
       <!-- change content depending on game stage -->
       <h2 class="directions"></h2>
-      <div class="ui-container">
-        <div class="pregame-ui">
-          <div class="player-board game-grid"></div>
-          <div class="ship-container">
-            <!-- temp form -->
-            <form action="" class="place-ship-form">
-              <input type="text" class="temp-x-input" required />
-              <input type="text" class="temp-y-input" required />
-              <input type="text" class="temp-direction-input" required />
-              <input type="text" class="temp-ship-input" required />
-              <button class="place-ship-btn" type="submit">place ship</button>
-            </form>
-          </div>
-        </div>
-      </div>
+      <div class="ui-container"></div>
     </main>
     <dialog class="win-popup">
       <p class="win-msg"></p>
@@ -50,8 +36,21 @@
       <!-- player(s) place ships -->
       <div class="pregame-ui">
         <div class="player-board game-grid"></div>
-        <div class="ship-container"></div>
+        <div class="ship-container">
+          <!-- temp form -->
+          <form action="" class="place-ship-form">
+            <input type="text" class="temp-x-input" required />
+            <input type="text" class="temp-y-input" required />
+            <input type="text" class="temp-direction-input" required />
+            <input type="text" class="temp-ship-input" required />
+            <button class="place-ship-btn" type="submit">place ship</button>
+          </form>
+        </div>
       </div>
+    </template>
+
+    <template id="pregame-cpu-ui-template">
+      <div class="pregame-cpu-ui"><p>Computer is placing ships...</p></div>
     </template>
 
     <template id="main-ui-template">

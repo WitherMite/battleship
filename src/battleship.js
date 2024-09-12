@@ -9,6 +9,7 @@ export default async function Battleship(
   // const [playerOne, playerTwo] = await setupFn();
   const playerOne = createPlayer(playerOneInput);
   const playerTwo = createPlayer(playerTwoInput);
+  const changeUI = createEvent();
   const render = createEvent();
   const win = createEvent();
 
@@ -49,15 +50,17 @@ export default async function Battleship(
     removeRenderer: render.removeListener,
     addWinListener: win.addListener,
     removeWinListener: win.removeListener,
+    addChangeUIListener: changeUI.addListener,
+    removeChangeUIListener: changeUI.removeListener,
     async play() {
-      // change ui to board setup (if player is computer, render differently)
-      // place ships
+      changeUI.send("place-ships", playerOne.povType);
       await placeAllShips(playerOne);
-      // change ui to board setup
+
+      changeUI.send("place-ships", playerTwo.povType);
       await placeAllShips(playerTwo);
-      // change ui to gameplay
+
+      changeUI.send("gameplay");
       // choose which player goes first?
-      // start game loop
       playRound();
     },
   };

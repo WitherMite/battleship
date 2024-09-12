@@ -1,4 +1,5 @@
 export default function renderGameboard(boardElement, boardState) {
+  if (!boardElement) return;
   const tiles = Array.from(boardElement.childNodes);
 
   // childnodes are not in a 2d array, so for every row we need to add an offset to the index

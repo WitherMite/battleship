@@ -7,13 +7,14 @@ const battleship = await Battleship(
   gameUI.createPlayerInput(),
   createCPUInput(10)
 );
+battleship.addChangeUIListener(gameUI.changeUI);
 battleship.attachRenderer(gameUI.render);
 battleship.addWinListener(gameUI.showWinDialog);
 battleship.play();
 
 // TODO list:
 //   finish battleship todo's
-//   better placement ui
+//   make new/restart game buttons
+//   better placement ui + better ship icons
 //   make cpu ai better
 //   document api for Battleship fn
-//   better ship icons

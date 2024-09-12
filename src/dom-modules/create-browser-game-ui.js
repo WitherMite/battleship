@@ -1,5 +1,7 @@
 import drawGameGrid from "./draw-game-grid.js";
 import renderGameboard from "./render-gameboard.js";
+import drawShipPlacementUI from "./draw-ship-placement-ui.js";
+import drawGameplayUI from "./draw-gameplay-ui.js";
 import playerAttack from "./player-attack.js";
 import playerPlaceShips from "./player-place-ships.js";
 const gameWindow = document.querySelector(".game-window");
@@ -20,6 +22,15 @@ export default function createBrowserGameUI() {
           ".radar .game-tile-container"
         );
         renderGameboard(playerRadar, radarState);
+      }
+    },
+
+    changeUI(uiType, playerPov) {
+      switch (uiType) {
+        case "place-ships":
+          return drawShipPlacementUI(playerPov);
+        case "gameplay":
+          return drawGameplayUI();
       }
     },
 
