@@ -47,7 +47,7 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
           attemptPlace(ship);
         }
       };
-      ships.forEach((ship) => attemptPlace(ship));
+      ships.forEach((ship) => setTimeout(attemptPlace, delay() * 8, ship));
     },
   };
 }
