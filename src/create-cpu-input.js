@@ -1,6 +1,8 @@
 // having a computer instantly play when you do doesnt feel great
-function getRandomDelay() {
-  return Math.floor(Math.random() * 200) + 150;
+function getRandomDelay(mult = 1) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, (Math.floor(Math.random() * 200) + 150) * mult);
+  });
 }
 
 export default function createCPUInput(boardSize, delay = getRandomDelay) {
@@ -18,25 +20,18 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
       const atkIndex = Math.floor(Math.random() * attacks.length - 1);
       const attack = attacks.splice(atkIndex, 1)[0];
       return new Promise((resolve) => {
-        setTimeout(resolve, delay(), attack);
+        delay().then(resolve(attack));
       });
     },
     placeShips() {
-      function getRandomCoords() {
-        const randomCoord = () => Math.floor(Math.random() * boardSize);
-        return [randomCoord(), randomCoord()];
-      }
-      function getRandomDir() {
-        const directions = ["up", "down", "left", "right"];
-        const randomIndex = Math.floor(Math.random() * 4);
-        return directions[randomIndex];
-      }
+      const player = this;
+      const ships = player.board.getUnplacedShips();
+      ships.forEach((ship) => delay(8).then(attemptPlace(ship)));
 
-      const ships = this.board.getUnplacedShips();
-      const attemptPlace = (ship) => {
+      function attemptPlace(ship) {
         // spent so long on this proj, cant be bothered to make a smart way to do this - naive brute force it is
         try {
-          this.board.placeShip(getRandomCoords(), getRandomDir(), ship);
+          player.board.placeShip(getRandomCoords(), getRandomDir(), ship);
         } catch (e) {
           if (
             e.message !== "Ship out of bounds" &&
@@ -46,8 +41,18 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
           }
           attemptPlace(ship);
         }
-      };
-      ships.forEach((ship) => setTimeout(attemptPlace, delay() * 8, ship));
+      }
+
+      function getRandomCoords() {
+        const randomCoord = () => Math.floor(Math.random() * boardSize);
+        return [randomCoord(), randomCoord()];
+      }
+
+      function getRandomDir() {
+        const directions = ["up", "down", "left", "right"];
+        const randomIndex = Math.floor(Math.random() * 4);
+        return directions[randomIndex];
+      }
     },
   };
 }

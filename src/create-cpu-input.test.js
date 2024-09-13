@@ -25,7 +25,10 @@ describe("Returns a valid input object for players", () => {
   });
 
   test("Attack method will never return any repeat coordinates", async () => {
-    const cpu2 = createCPUInput(boardSize, () => 0);
+    const cpu2 = createCPUInput(
+      boardSize,
+      () => new Promise((resolve) => resolve(0))
+    );
     const exampleAtk = await cpu2.attack();
 
     function areEqualNumArrays(arr1, arr2) {
@@ -55,7 +58,7 @@ describe("Tells board property of objects its composed with to place all ships",
     board: {
       getUnplacedShips: () => ships,
     },
-    ...createCPUInput(boardSize),
+    ...createCPUInput(boardSize, () => new Promise((resolve) => resolve(0))),
   };
 
   let mockFn;
