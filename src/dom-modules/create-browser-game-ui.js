@@ -9,6 +9,12 @@ const winDialog = document.querySelector(".win-popup");
 
 export default function createBrowserGameUI() {
   return {
+    setNewGameBtns(callback) {
+      const btns = document.querySelectorAll(".restart-btn");
+      btns.forEach((btn) => btn.addEventListener("click", callback));
+      winDialog.close();
+    },
+
     render(boardState, radarState) {
       const grids = gameWindow.querySelectorAll(".game-grid");
       grids.forEach((grid) => drawGameGrid(grid, boardState.length));

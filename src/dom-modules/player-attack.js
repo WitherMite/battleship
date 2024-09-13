@@ -12,6 +12,5 @@ export default function playerAttack() {
       }
     };
     playerRadar.addEventListener("click", getCoordinate);
-    // add some way to confirm choice
   });
 }
