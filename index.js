@@ -2,7 +2,8 @@ import createBrowserGameUI from "./src/dom-modules/create-browser-game-ui.js";
 import createCPUInput from "./src/create-cpu-input.js";
 import Battleship from "./src/battleship.js";
 
-const startGame = async () => {
+startGame();
+async function startGame() {
   const gameUI = createBrowserGameUI();
   const battleship = await Battleship(
     gameUI.createPlayerInput(),
@@ -11,11 +12,10 @@ const startGame = async () => {
   gameUI.setNewGameBtns(startGame);
 
   battleship.addChangeUIListener(gameUI.changeUI);
-  battleship.attachRenderer(gameUI.render);
+  battleship.addRenderer(gameUI.render);
   battleship.addWinListener(gameUI.showWinDialog);
   battleship.play();
-};
-startGame();
+}
 
 // TODO list:
 //   finish battleship todo's

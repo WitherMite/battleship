@@ -4,10 +4,10 @@ import drawShipPlacementUI from "./draw-ship-placement-ui.js";
 import drawGameplayUI from "./draw-gameplay-ui.js";
 import playerAttack from "./player-attack.js";
 import playerPlaceShips from "./player-place-ships.js";
-const gameWindow = document.querySelector(".game-window");
-const winDialog = document.querySelector(".win-popup");
 
 export default function createBrowserGameUI() {
+  const gameWindow = document.querySelector(".game-window");
+  const winDialog = document.querySelector(".win-popup");
   return {
     setNewGameBtns(callback) {
       const btns = document.querySelectorAll(".restart-btn");

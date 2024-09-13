@@ -46,7 +46,7 @@ export default async function Battleship(
     playRound(opponent, player);
   }
   return {
-    attachRenderer: render.addListener,
+    addRenderer: render.addListener,
     removeRenderer: render.removeListener,
     addWinListener: win.addListener,
     removeWinListener: win.removeListener,

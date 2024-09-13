@@ -20,6 +20,7 @@ header {
     padding: 1.5rem;
     height: var(--header-height);
     background-color: var(--secondary-color);
+    border-bottom: 2px solid var(--font-color);
     display: grid;
     gap: 1.5rem;
     grid-template-columns: var(--btn-width) auto var(--btn-width);
