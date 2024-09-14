@@ -14,9 +14,6 @@ export default async function Battleship(
   const win = createEvent();
 
   function placeAllShips(player) {
-    const renderCallback = () => {
-      render.send(player.board.getState());
-    };
     const stopEvent = createEvent();
     return new Promise((resolve) => {
       player.board.addShipsPlacedListener(function fn() {
@@ -27,6 +24,9 @@ export default async function Battleship(
       renderCallback();
       player.placeShips(renderCallback, stopEvent);
     });
+    function renderCallback() {
+      render.send(player.board.getState());
+    }
   }
 
   async function playRound(player = playerOne, opponent = playerTwo) {
