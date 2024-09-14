@@ -21,4 +21,13 @@ export default function playerPlaceShips(renderBoard, stopEvent) {
     stopEvent.removeListener(onStop);
     form.removeEventListener("submit", getInput);
   });
+
+  const presetBtn = form.querySelector(".preset-ship-btn");
+  presetBtn.addEventListener("click", () => {
+    player.board.placeShip([4, 2], "right", "carrier");
+    player.board.placeShip([4, 4], "up", "battleship");
+    player.board.placeShip([8, 5], "down", "destroyer");
+    player.board.placeShip([2, 3], "left", "submarine");
+    player.board.placeShip([0, 8], "right", "patrol");
+  });
 }
