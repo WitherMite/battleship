@@ -32,8 +32,8 @@ export default function createGameboard() {
     addShipsPlacedListener: shipsPlacedEvent.addListener,
     removeShipsPlacedListener: shipsPlacedEvent.removeListener,
     getState() {
-      const boardDeepCopy = structuredClone(gameboard);
-      console.table(boardDeepCopy);
+      // does not copy ships' methods
+      const boardDeepCopy = JSON.parse(JSON.stringify(gameboard));
       return boardDeepCopy;
     },
     getUnplacedShips() {
