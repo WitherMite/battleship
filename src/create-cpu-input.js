@@ -30,7 +30,6 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
 
       function attemptPlace(ship) {
         // spent so long on this proj, cant be bothered to make a smart way to do this - naive brute force it is
-        // I hate how it tends to place ships all close together though
         try {
           player.board.placeShip(getRandomCoords(), getRandomDir(), ship);
         } catch (e) {
