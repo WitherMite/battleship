@@ -24,19 +24,15 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
     name: "Computer",
     povType: "computer",
     attack(radar) {
-      const player = this;
-      const [x, y] = [...prevAttack];
-      console.log(x, y);
-      console.log(prevAttack);
-      const lastTile = prevAttack.every((n) => n !== null) ? radar[x][y] : null;
-      console.log(lastTile);
-      prevHit = lastTile?.shot?.isHit ? [x, y] : prevHit;
       const coords = [];
+      const [x, y] = [...prevAttack];
+      const lastTile = prevAttack.every((n) => n !== null) ? radar[x][y] : null;
+      prevHit = lastTile?.shot?.isHit ? [x, y] : prevHit;
 
       // decide whether to search
       // if not searching, and last shot was hit, start search
       searchForShip = lastTile?.shot?.isHit || searchForShip;
-      // dont search if ship was sunk have been checked
+      // dont search if ship was sunk
       if (lastTile?.ship?.isSunk) {
         stopSearch();
       }
@@ -52,6 +48,7 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
               tile.shot = null; // only changes the copy, prevents infinite loops when the first tile has all directions shot
               prevHit = [col, row];
               searchForShip = true;
+              return;
             }
           }
         }
@@ -63,11 +60,10 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
       }
 
       function attackAdjacent(x, y, tries = 1) {
-        if (tries > 4) {
+        if (tries > directions.length) {
           stopSearch();
-          player.attack(radar);
+          return searchForShip ? attackAdjacent(...prevHit) : randomAttack();
         }
-        console.log(directions, searchDir);
         const [a, b] = directions[searchDir];
         const coords = [x + a, y + b];
         const atkIndex = attacks.findIndex(
@@ -98,11 +94,10 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
         delay().then(() => resolve(coords));
       });
     },
-    async placeShips() {
+    placeShips() {
       const player = this;
-      console.log(player);
       const ships = player.board.getUnplacedShips();
-      return ships.forEach((ship) => delay(8).then(() => attemptPlace(ship)));
+      ships.forEach((ship) => delay(8).then(() => attemptPlace(ship)));
 
       function attemptPlace(ship) {
         // spent so long on this proj, cant be bothered to make a smart way to do this - naive brute force it is
