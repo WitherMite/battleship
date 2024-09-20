@@ -18,8 +18,8 @@ async function startGame() {
 }
 
 // TODO list:
+//   fix cpu tests
 //   finish battleship todo's
 //   better placement ui + better ship icons
 //   create a setup menu
-//   make cpu ai better
 //   document api for Battleship fn

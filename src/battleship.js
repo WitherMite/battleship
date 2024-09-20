@@ -36,7 +36,7 @@ export default async function Battleship(
         : [player.board.getState, opponent.getRadar];
 
     render.send(getBoard(), getRadar());
-    const attack = await player.attack();
+    const attack = await player.attack(opponent.getRadar());
     opponent.board.receiveAttack(attack);
     render.send(getBoard(), getRadar());
 

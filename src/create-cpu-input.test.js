@@ -14,19 +14,22 @@ describe("Returns a valid input object for players", () => {
   // having a smaller board shouldn't affect these tests
   const boardSize = 5;
   const cpu = createCPUInput(boardSize);
+  const radarMock = Array.from({ length: boardSize }, () =>
+    Array.from({ length: boardSize }, () => ({ ship: null, shot: null }))
+  );
 
   test('Has povType set to "computer"', () => {
     expect(cpu.povType).toBe("computer");
   });
 
   test("Attack method returns a valid gameboard coordinate", async () => {
-    const attack = await cpu.attack();
+    const attack = await cpu.attack(radarMock);
     expect(areValidCoordinates(attack, boardSize)).toBe(true);
   });
 
   test("Attack method will never return any repeat coordinates", async () => {
     const cpu2 = createCPUInput(boardSize, async () => {});
-    const exampleAtk = await cpu2.attack();
+    const exampleAtk = await cpu2.attack(radarMock);
 
     function areEqualNumArrays(arr1, arr2) {
       return (
@@ -39,7 +42,7 @@ describe("Returns a valid input object for players", () => {
 
     let hasRepeated = false;
     for (let i = 0; i < boardSize ** 2 - 1; i++) {
-      hasRepeated = areEqualNumArrays(await cpu2.attack(), exampleAtk);
+      hasRepeated = areEqualNumArrays(await cpu2.attack(radarMock), exampleAtk);
       if (hasRepeated) break;
     }
     expect(hasRepeated).toBe(false);
@@ -54,15 +57,13 @@ describe("Tells board property of objects its composed with to place all ships",
   const playerMock = {
     board: {
       getUnplacedShips: () => ships,
+      placeShip: jest.fn((c, d, ship) => ship),
     },
     ...createCPUInput(boardSize, async () => {}),
   };
 
-  let mockFn;
-  beforeEach(() => {
-    playerMock.board.placeShip = jest.fn((c, d, ship) => ship);
-    mockFn = playerMock.board.placeShip;
-  });
+  let mockFn = playerMock.board.placeShip;
+  beforeEach(mockFn.mockClear);
 
   test("Only sends valid arguments", () => {
     playerMock.placeShips();
@@ -100,9 +101,9 @@ describe("Tells board property of objects its composed with to place all ships",
         throw new Error(errMsg, { cause });
       });
 
-      expect(() => {
-        playerMock.placeShips();
-      }).toThrow(new Error(errMsg, { cause }));
+      expect(() => playerMock.placeShips()).toThrow(
+        new Error(errMsg, { cause })
+      );
     });
   });
 });

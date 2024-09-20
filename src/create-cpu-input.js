@@ -13,23 +13,100 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
     }
   }
 
+  const directions = [[1,0],[-1,0],[0,1],[0,-1]]; /* prettier-ignore */
+  let prevAttack = [null, null];
+  let prevHit;
+  let searchDir = 0;
+  let searchForShip = false;
+  fisherYatesShuffleArr(directions);
+
   return {
     name: "Computer",
     povType: "computer",
-    attack() {
-      const atkIndex = Math.floor(Math.random() * attacks.length - 1);
-      const attack = attacks.splice(atkIndex, 1)[0];
+    attack(radar) {
+      const player = this;
+      const [x, y] = [...prevAttack];
+      console.log(x, y);
+      console.log(prevAttack);
+      const lastTile = prevAttack.every((n) => n !== null) ? radar[x][y] : null;
+      console.log(lastTile);
+      prevHit = lastTile?.shot?.isHit ? [x, y] : prevHit;
+      const coords = [];
+
+      // decide whether to search
+      // if not searching, and last shot was hit, start search
+      searchForShip = lastTile?.shot?.isHit || searchForShip;
+      // dont search if ship was sunk have been checked
+      if (lastTile?.ship?.isSunk) {
+        stopSearch();
+      }
+      function stopSearch() {
+        fisherYatesShuffleArr(directions);
+        searchDir = 0;
+        searchForShip = false;
+        // check for any hits that haven't sunk a ship
+        for (let col = 0; col < radar.length; col++) {
+          for (let row = 0; row < radar[col].length; row++) {
+            const tile = radar[col][row];
+            if (tile.shot?.isHit && !tile.ship?.isSunk) {
+              tile.shot = null; // only changes the copy, prevents infinite loops when the first tile has all directions shot
+              prevHit = [col, row];
+              searchForShip = true;
+            }
+          }
+        }
+      }
+
+      function randomAttack() {
+        const atkIndex = Math.floor(Math.random() * attacks.length - 1);
+        return attacks.splice(atkIndex, 1)[0];
+      }
+
+      function attackAdjacent(x, y, tries = 1) {
+        if (tries > 4) {
+          stopSearch();
+          player.attack(radar);
+        }
+        console.log(directions, searchDir);
+        const [a, b] = directions[searchDir];
+        const coords = [x + a, y + b];
+        const atkIndex = attacks.findIndex(
+          (i) => i[0] === coords[0] && i[1] === coords[1]
+        );
+        if (atkIndex === -1) {
+          // if tile has been attacked or is not on board, try a new direction
+          searchDir < 3 ? searchDir++ : (searchDir = 0);
+          return attackAdjacent(x, y, ++tries);
+        }
+        attacks.splice(atkIndex, 1);
+        return coords;
+      }
+
+      // attack
+      if (searchForShip) {
+        if (!lastTile?.shot?.isHit)
+          // if missed last, try new dir
+          searchDir < 3 ? searchDir++ : (searchDir = 0);
+        coords.push(...attackAdjacent(...prevHit));
+        prevAttack = coords;
+      } else {
+        coords.push(...randomAttack());
+        prevAttack = coords;
+      }
+
       return new Promise((resolve) => {
-        delay().then(() => resolve(attack));
+        delay().then(() => resolve(coords));
       });
     },
-    placeShips() {
+    async placeShips() {
       const player = this;
+      console.log(player);
       const ships = player.board.getUnplacedShips();
-      ships.forEach((ship) => delay(8).then(() => attemptPlace(ship)));
+      return ships.forEach((ship) => delay(8).then(() => attemptPlace(ship)));
 
       function attemptPlace(ship) {
         // spent so long on this proj, cant be bothered to make a smart way to do this - naive brute force it is
+        // hate how it tends to place ships all close together though.
         try {
           player.board.placeShip(getRandomCoords(), getRandomDir(), ship);
         } catch (e) {
@@ -55,4 +132,14 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
       }
     },
   };
+}
+
+// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+function fisherYatesShuffleArr(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    // https://hackernoon.com/how-does-javascripts-math-random-generate-random-numbers-ef0de6a20131
+    // ^ says most browsers use a PRNG with 64bit seeds, so plenty for this array of 4
+    const index = Math.floor(Math.random() * i + 1);
+    [arr[i], arr[index]] = [arr[index], arr[i]];
+  }
 }
