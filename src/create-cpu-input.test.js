@@ -13,7 +13,7 @@ function areValidCoordinates(coords, boardSize) {
 describe("Returns a valid input object for players", () => {
   // having a smaller board shouldn't affect these tests
   const boardSize = 5;
-  const cpu = createCPUInput(boardSize);
+  const cpu = createCPUInput(boardSize, async () => {});
   const radarMock = Array.from({ length: boardSize }, () =>
     Array.from({ length: boardSize }, () => ({ ship: null, shot: null }))
   );
@@ -62,30 +62,33 @@ describe("Tells board property of objects its composed with to place all ships",
     ...createCPUInput(boardSize, async () => {}),
   };
 
-  let mockFn = playerMock.board.placeShip;
-  beforeEach(mockFn.mockClear);
+  let mockFn;
+  beforeEach(() => {
+    playerMock.board.placeShip = jest.fn((c, d, ship) => ship);
+    mockFn = playerMock.board.placeShip;
+  });
 
-  test("Only sends valid arguments", () => {
-    playerMock.placeShips();
+  test("Only sends valid arguments", async () => {
+    await playerMock.placeShips();
     mockFn.mock.calls.forEach((call) => {
       expect(areValidCoordinates(call[0], boardSize)).toBe(true);
       expect(directions).toContain(call[1]);
       expect(ships).toContain(call[2]);
     });
   });
-  test("Called at least once for each unplaced ship", () => {
-    playerMock.placeShips();
+  test("Called at least once for each unplaced ship", async () => {
+    await playerMock.placeShips();
     expect(mockFn.mock.calls.length).toBeGreaterThanOrEqual(ships.length);
   });
 
   describe("Tries again only when board throws an expected error", () => {
     test.each([["Ship out of bounds"], ["Ship would overlap another boat"]])(
       "Tries again for %s",
-      (expectedMsg) => {
+      async (expectedMsg) => {
         mockFn.mockImplementationOnce(() => {
           throw new Error(expectedMsg);
         });
-        playerMock.placeShips();
+        await playerMock.placeShips();
         expect(mockFn).toHaveBeenCalledTimes(ships.length + 1);
         ships.forEach((ship, i) =>
           expect(mockFn.mock.results[i + 1].value).toBe(ship)
@@ -101,7 +104,7 @@ describe("Tells board property of objects its composed with to place all ships",
         throw new Error(errMsg, { cause });
       });
 
-      expect(() => playerMock.placeShips()).toThrow(
+      expect(async () => await playerMock.placeShips()).rejects.toThrow(
         new Error(errMsg, { cause })
       );
     });

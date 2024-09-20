@@ -94,10 +94,13 @@ export default function createCPUInput(boardSize, delay = getRandomDelay) {
         delay().then(() => resolve(coords));
       });
     },
-    placeShips() {
+    async placeShips() {
       const player = this;
       const ships = player.board.getUnplacedShips();
-      ships.forEach((ship) => delay(8).then(() => attemptPlace(ship)));
+      for await (const ship of ships) {
+        delay(8).then(attemptPlace(ship));
+      }
+      return;
 
       function attemptPlace(ship) {
         // spent so long on this proj, cant be bothered to make a smart way to do this - naive brute force it is
