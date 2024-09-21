@@ -5,7 +5,7 @@ function getRandomDelay(mult = 1) {
   });
 }
 
-export default function createCPUInput(boardSize, delay = getRandomDelay) {
+export default function createCPUInput(boardSize = 10, delay = getRandomDelay) {
   const attacks = [];
   for (let x = 0; x < boardSize; x++) {
     for (let y = 0; y < boardSize; y++) {

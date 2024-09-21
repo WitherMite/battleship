@@ -1,12 +1,7 @@
 import createEvent from "./create-event.js";
 import createPlayer from "./create-player.js";
 
-export default async function Battleship(
-  playerOneInput,
-  playerTwoInput /* replace with setupFn/obj */
-) {
-  // move player setup to a setup fn (or object?) that uses a game menu input
-  // const [playerOne, playerTwo] = await setupFn();
+export default async function Battleship(playerOneInput, playerTwoInput) {
   const playerOne = createPlayer(playerOneInput);
   const playerTwo = createPlayer(playerTwoInput);
   const changeUI = createEvent();

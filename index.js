@@ -5,11 +5,9 @@ import Battleship from "./src/battleship.js";
 startGame();
 async function startGame() {
   const gameUI = createBrowserGameUI();
-  const battleship = await Battleship(
-    gameUI.createPlayerInput(),
-    createCPUInput(10)
-  );
   gameUI.setNewGameBtns(startGame);
+  const opponent = await gameUI.chooseOpponent(createCPUInput);
+  const battleship = await Battleship(gameUI.createPlayerInput(), opponent);
 
   battleship.addChangeUIListener(gameUI.changeUI);
   battleship.addRenderer(gameUI.render);
@@ -18,7 +16,6 @@ async function startGame() {
 }
 
 // TODO list:
-//   fix cpu tests
 //   finish battleship todo's
 //   better placement ui + better ship icons
 //   create a setup menu

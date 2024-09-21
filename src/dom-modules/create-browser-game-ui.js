@@ -2,8 +2,10 @@ import drawGameGrid from "./draw-game-grid.js";
 import renderGameboard from "./render-gameboard.js";
 import drawShipPlacementUI from "./draw-ship-placement-ui.js";
 import drawGameplayUI from "./draw-gameplay-ui.js";
+import drawMenuUI from "./draw-menu-ui.js";
 import playerAttack from "./player-attack.js";
 import playerPlaceShips from "./player-place-ships.js";
+import getOpponentType from "./get-opponent-type.js";
 
 export default function createBrowserGameUI() {
   const gameWindow = document.querySelector(".game-window");
@@ -13,6 +15,12 @@ export default function createBrowserGameUI() {
       const btns = document.querySelectorAll(".restart-btn");
       btns.forEach((btn) => btn.addEventListener("click", callback));
       winDialog.close();
+    },
+
+    async chooseOpponent(makeComputer) {
+      this.changeUI("menu");
+      const type = await getOpponentType();
+      return type === "p2" ? this.createPlayerInput() : makeComputer();
     },
 
     render(boardState, radarState) {
@@ -33,6 +41,8 @@ export default function createBrowserGameUI() {
 
     changeUI(uiType, playerPov) {
       switch (uiType) {
+        case "menu":
+          return drawMenuUI();
         case "place-ships":
           return drawShipPlacementUI(playerPov);
         case "gameplay":
