@@ -1,4 +1,4 @@
-export default async function getOpponentType() {
+export default function getOpponentType() {
   return new Promise(addButtonsBehavior);
 }
 

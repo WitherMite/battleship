@@ -38,6 +38,8 @@ export default async function Battleship(playerOneInput, playerTwoInput) {
     if (opponent.board.isDefeat) {
       return win.send(player);
     }
+    await player.endTurn(opponent.povType);
+    changeUI.send("gameplay");
     playRound(opponent, player);
   }
   return {
@@ -51,9 +53,11 @@ export default async function Battleship(playerOneInput, playerTwoInput) {
       changeUI.send("place-ships", playerOne.povType);
       await placeAllShips(playerOne);
 
+      await playerOne.endTurn(playerTwo.povType);
       changeUI.send("place-ships", playerTwo.povType);
       await placeAllShips(playerTwo);
 
+      await playerTwo.endTurn(playerOne.povType);
       changeUI.send("gameplay");
       // choose which player goes first?
       playRound();

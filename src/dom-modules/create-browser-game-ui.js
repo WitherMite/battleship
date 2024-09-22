@@ -6,6 +6,8 @@ import drawMenuUI from "./draw-menu-ui.js";
 import playerAttack from "./player-attack.js";
 import playerPlaceShips from "./player-place-ships.js";
 import getOpponentType from "./get-opponent-type.js";
+import hideTurnChange from "./hide-turn-change.js";
+import endTurnBtn from "./end-turn-btn.js";
 
 export default function createBrowserGameUI() {
   const gameWindow = document.querySelector(".game-window");
@@ -62,6 +64,11 @@ export default function createBrowserGameUI() {
         povType: "human",
         attack: playerAttack,
         placeShips: playerPlaceShips,
+        async endTurn(opponentType) {
+          if (opponentType === "computer") return;
+          await endTurnBtn();
+          return await hideTurnChange();
+        },
         name: (() => {
           // change name input
           const name =

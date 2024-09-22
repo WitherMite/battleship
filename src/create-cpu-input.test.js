@@ -22,6 +22,10 @@ describe("Returns a valid input object for players", () => {
     expect(cpu.povType).toBe("computer");
   });
 
+  test("Has dummy async end turn method", () => {
+    return expect(cpu.endTurn()).resolves.toBeUndefined();
+  });
+
   test("Attack method returns a valid gameboard coordinate", async () => {
     const attack = await cpu.attack(radarMock);
     expect(areValidCoordinates(attack, boardSize)).toBe(true);

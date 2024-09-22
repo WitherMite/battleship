@@ -23,6 +23,9 @@ export default function createCPUInput(boardSize = 10, delay = getRandomDelay) {
   return {
     name: "Computer",
     povType: "computer",
+    async endTurn() {
+      return;
+    },
     attack(radar) {
       const coords = [];
       const [x, y] = [...prevAttack];
