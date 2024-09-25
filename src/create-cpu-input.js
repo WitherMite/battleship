@@ -13,7 +13,7 @@ export default function createCPUInput(boardSize = 10, delay = getRandomDelay) {
     }
   }
 
-  const directions = [[1,0],[-1,0],[0,1],[0,-1]]; /* prettier-ignore */
+  const directions = [[1,0],[-1,0],[0,1],[0,-1]]; // prettier-ignore
   let prevAttack = [null, null];
   let prevHit;
   let searchDir = 0;

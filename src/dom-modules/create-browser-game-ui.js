@@ -64,6 +64,7 @@ export default function createBrowserGameUI() {
 
     createPlayerInput() {
       return {
+        name: "Player",
         povType: "human",
         attack: playerAttack,
         placeShips: playerPlaceShips,
@@ -76,12 +77,6 @@ export default function createBrowserGameUI() {
             button.addEventListener("click", resolve);
           });
         },
-        name: (() => {
-          // change name input
-          const name =
-            ""; /* prompt("Pick a name") - the blocking is annoying */
-          return name ? name : "Player";
-        })(),
       };
     },
   };

@@ -2,6 +2,7 @@ export default function playerPlaceShips(renderBoard, stopEvent) {
   const player = this;
 
   // replace with better UI
+  // add name input
   function getInput(e) {
     e.preventDefault();
     const coordinate = [
