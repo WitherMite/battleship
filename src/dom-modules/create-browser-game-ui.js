@@ -1,12 +1,9 @@
 import drawGameGrid from "./draw-game-grid.js";
 import renderGameboard from "./render-gameboard.js";
-import drawShipPlacementUI from "./draw-ship-placement-ui.js";
-import drawGameplayUI from "./draw-gameplay-ui.js";
-import drawMenuUI from "./draw-menu-ui.js";
+import switchUITemplate from "./switch-ui-template.js";
 import playerAttack from "./player-attack.js";
 import playerPlaceShips from "./player-place-ships.js";
 import getOpponentType from "./get-opponent-type.js";
-import hideTurnChange from "./hide-turn-change.js";
 import endTurnBtn from "./end-turn-btn.js";
 
 export default function createBrowserGameUI() {
@@ -15,7 +12,11 @@ export default function createBrowserGameUI() {
   return {
     setNewGameBtns(callback) {
       const btns = document.querySelectorAll(".restart-btn");
-      btns.forEach((btn) => btn.addEventListener("click", callback));
+      btns.forEach((btn) =>
+        btn.addEventListener("click", () => {
+          if (confirm("This will end the current game.")) callback();
+        })
+      );
       winDialog.close();
     },
 
@@ -44,11 +45,13 @@ export default function createBrowserGameUI() {
     changeUI(uiType, playerPov) {
       switch (uiType) {
         case "menu":
-          return drawMenuUI();
+          return switchUITemplate("menu-ui-template");
         case "place-ships":
-          return drawShipPlacementUI(playerPov);
+          return playerPov === "computer"
+            ? switchUITemplate("pregame-cpu-ui-template")
+            : switchUITemplate("pregame-ui-template");
         case "gameplay":
-          return drawGameplayUI();
+          return switchUITemplate("main-ui-template");
       }
     },
 
@@ -67,7 +70,11 @@ export default function createBrowserGameUI() {
         async endTurn(opponentType) {
           if (opponentType === "computer") return;
           await endTurnBtn();
-          return await hideTurnChange();
+          switchUITemplate("hide-screen-template");
+          return new Promise((resolve) => {
+            const button = document.querySelector(".show-screen-btn");
+            button.addEventListener("click", resolve);
+          });
         },
         name: (() => {
           // change name input

@@ -16,7 +16,5 @@ async function startGame() {
 }
 
 // TODO list:
-//   finish battleship todo's
-//   better placement ui + better ship icons
-//   add a turn change confirmation when opponent is a player
+//   better placement ui
 //   document api for Battleship fn
