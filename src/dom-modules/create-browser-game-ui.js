@@ -11,19 +11,21 @@ export default function createBrowserGameUI() {
   const winDialog = document.querySelector(".win-popup");
   return {
     setNewGameBtns(callback) {
-      const btns = document.querySelectorAll(".restart-btn");
-      btns.forEach((btn) =>
-        btn.addEventListener("click", function fn() {
-          if (
-            btn.classList.contains("win-restart-btn") ||
-            confirm("This will end the current game.")
-          ) {
-            btn.removeEventListener("click", fn);
-            callback();
-          }
-        })
-      );
-      winDialog.close();
+      const headerBtn = document.querySelector(".header-restart-btn");
+      const winBtn = document.querySelector(".win-restart-btn");
+
+      headerBtn.addEventListener("click", function confirmEnd() {
+        if (confirm("This will end the current game.")) {
+          headerBtn.removeEventListener("click", confirmEnd);
+          callback();
+        }
+      });
+
+      winBtn.addEventListener("click", function end() {
+        winBtn.removeEventListener("click", end);
+        winDialog.close();
+        callback();
+      });
     },
 
     async chooseOpponent(makeComputer) {
