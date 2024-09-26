@@ -101,7 +101,7 @@ export default function createCPUInput(boardSize = 10, delay = getRandomDelay) {
       const player = this;
       const ships = player.board.getUnplacedShips();
       for await (const ship of ships) {
-        delay(8).then(attemptPlace(ship));
+        await delay(7).then(attemptPlace(ship));
       }
       return;
 
