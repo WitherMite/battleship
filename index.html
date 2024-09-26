@@ -14,7 +14,6 @@
     </header>
     <main class="game-window">
       <!-- change content depending on game stage -->
-      <h2 class="directions"></h2>
       <div class="ui-container"></div>
     </main>
     <dialog class="win-popup">
@@ -32,6 +31,7 @@
     <template id="menu-ui-template">
       <!-- select cpu/irl opponent -->
       <div class="menu-ui">
+        <h2 class="directions">Choose your opponent</h2>
         <div class="opponent-selection" novalidate>
           <button value="cpu" class="menu-btn cpu-btn">Computer</button>
           <button value="p2" class="menu-btn p2-btn">2nd player</button>
@@ -42,6 +42,7 @@
 
     <template id="pregame-ui-template">
       <!-- player(s) place ships -->
+      <h2 class="directions">Place your fleet</h2>
       <div class="pregame-ui">
         <div class="player-board game-grid"></div>
         <div class="ship-container">
@@ -64,6 +65,7 @@
 
     <template id="main-ui-template">
       <!-- main gameplay -->
+      <h2 class="directions">Click on a tile to attack</h2>
       <div class="main-ui">
         <div class="radar game-grid"></div>
         <div class="player-board game-grid"></div>
