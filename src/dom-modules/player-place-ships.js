@@ -8,6 +8,7 @@ export default function playerPlaceShips(renderBoard, stopEvent) {
   const yInput = document.getElementById("y-pos");
   const directionInput = document.getElementById("direction");
   const shipTypeInput = document.getElementById("ship-type");
+  const shipTypeSelection = shipTypeInput.selectedOptions;
 
   presetBtn.addEventListener("click", placeRandom);
   submitBtn.addEventListener("click", getInput);
@@ -27,6 +28,7 @@ export default function playerPlaceShips(renderBoard, stopEvent) {
     const shipType = shipTypeInput.value;
     try {
       player.board.placeShip(coordinates, direction, shipType);
+      shipTypeInput.removeChild(shipTypeSelection[0]);
     } catch (err) {
       // show error on last form input
       shipTypeInput.setCustomValidity(err.message);
