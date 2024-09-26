@@ -13,12 +13,14 @@ export default function createBrowserGameUI() {
     setNewGameBtns(callback) {
       const btns = document.querySelectorAll(".restart-btn");
       btns.forEach((btn) =>
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", function fn() {
           if (
             btn.classList.contains("win-restart-btn") ||
             confirm("This will end the current game.")
-          )
+          ) {
+            btn.removeEventListener("click", fn);
             callback();
+          }
         })
       );
       winDialog.close();
