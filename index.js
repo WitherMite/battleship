@@ -16,5 +16,4 @@ async function startGame() {
 }
 
 // TODO list:
-//   style placement form
 //   document api for Battleship fn

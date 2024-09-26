@@ -16,7 +16,7 @@ export default function playerPlaceShips(renderBoard, stopEvent) {
 
   stopEvent.addListener(function onStop() {
     stopEvent.removeListener(onStop);
-    form.removeEventListener("submit", getInput);
+    submitBtn.removeEventListener("click", getInput);
     presetBtn.removeEventListener("click", placeRandom);
   });
 

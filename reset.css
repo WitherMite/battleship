@@ -4,9 +4,17 @@
     box-sizing: border-box;
 }
 
-button {
+button,
+label {
     border: none;
     background: none;
     font: inherit;
     cursor: pointer;
+    color: inherit;
+}
+
+select,
+input {
+    font: inherit;
+    color: inherit;
 }

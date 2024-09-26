@@ -151,8 +151,8 @@ header h1 {
     justify-content: center;
     align-items: flex-end;
 
-    /* makes ui look more centered on desktop taking whitespace into account, barely noticable on mobile */
-    margin-right: 3.75%;
+    /* centers ui ignoring the transparent labels by shifting left the size of a tile */
+    margin-right: calc(min(75svw, 75svh) / 11);
 }
 
 .main-ui .player-board {
@@ -165,26 +165,91 @@ header h1 {
 
 .pregame-ui {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
     gap: 1.5rem;
     justify-content: center;
-    /* clamps width of ship container to 250px when inline with gameboard */
-    max-width: calc(min(75svw, 75svh) + calc(1.5rem + 250px));
+}
+
+.pregame-ui .game-grid {
+    /* centers grid ignoring the transparent labels when wrapped 
+       by shifting left the size of a tile */
+    margin-right: calc(min(75svw, 75svh) / 11);
 }
 
 .ship-container {
+    margin-top: 1.5rem;
     flex: 1;
-    border: 2px solid var(--font-color);
     min-height: min(25svw, 25svh);
-    min-width: 200px;
+    min-width: 28.2svw;
     width: 25svw;
     max-width: min(75svw, 75svh);
+    display: grid;
+    place-items: center;
 }
 
-/* 
-    try using an @container rule to place ships in ship container differently 
-    when inline or below board
-*/
+.place-ship-form {
+    font-size: clamp(0.75rem, 2.5svw, 1.25rem);
+    background-color: var(--secondary-color);
+    border: 2px solid var(--font-color);
+    padding: clamp(0.85rem, 3svw, 1.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.input-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    place-content: start;
+    align-items: end;
+    gap: 0.5rem;
+}
+
+.coordinate-inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.coordinate-inputs p {
+    margin-bottom: -0.225rem;
+    font-size: clamp(0.6rem, 2svw, 1rem);
+    align-self: center;
+}
+
+.place-ship-btn,
+.preset-ship-btn {
+    font-size: clamp(0.65rem, 2.25svw, 1.125rem);
+    padding: 0.5em 0.75em;
+    background-color: var(--background-color);
+    border: 2px solid var(--font-color);
+    border-radius: 6px;
+}
+
+.place-ship-form label {
+    min-width: 17ch;
+}
+
+.place-ship-form select,
+.place-ship-form input[type="text"] {
+    padding: 0.125ch 0.0625ch;
+    min-width: 9ch;
+    background-color: var(--background-color);
+    border: 2px solid var(--font-color);
+    border-radius: 3px;
+}
+
+.button-container {
+    margin-top: 1rem;
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
 
 /* Player Menu */
 
@@ -241,7 +306,6 @@ header h1 {
 .win-restart-btn {
     padding: 0.5rem 1.25rem;
     font-size: 2.75rem;
-    color: var(--font-color);
     background-color: var(--background-color);
     border: 2px solid var(--font-color);
     border-radius: 6px;
