@@ -48,12 +48,64 @@
         <div class="ship-container">
           <!-- temp form -->
           <form action="" class="place-ship-form">
-            <input type="text" class="temp-x-input" required />
-            <input type="text" class="temp-y-input" required />
-            <input type="text" class="temp-direction-input" required />
-            <input type="text" class="temp-ship-input" required />
-            <button class="place-ship-btn" type="submit">place ship</button>
-            <button class="preset-ship-btn">use preset</button>
+            <div>
+              <label for="name">Name:</label>
+              <input type="text" id="name" value="Player" required />
+            </div>
+            <div class="coordinate-inputs">
+              <p>Click on a tile to quickly choose position</p>
+              <div>
+                <label for="y-pos">Vertical Position:</label>
+                <select type="text" id="y-pos" required>
+                  <option value="10">A</option>
+                  <option value="9">B</option>
+                  <option value="8">C</option>
+                  <option value="7">D</option>
+                  <option value="6">E</option>
+                  <option value="5">F</option>
+                  <option value="4">G</option>
+                  <option value="3">H</option>
+                  <option value="2">I</option>
+                  <option value="1">J</option>
+                </select>
+              </div>
+              <div>
+                <label for="x-pos">Horizontal Position:</label>
+                <select type="number" min="1" max="10" id="x-pos" required>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="direction">Ship Direction:</label>
+              <select id="direction" required>
+                <option value="up">up</option>
+                <option value="down">down</option>
+                <option value="left">left</option>
+                <option value="right">right</option>
+              </select>
+            </div>
+            <div>
+              <label for="ship-type">Ship Class:</label>
+              <select type="text" id="ship-type" required>
+                <option value="carrier">Carrier</option>
+                <option value="battleship">Battleship</option>
+                <option value="destroyer">Destroyer</option>
+                <option value="submarine">Submarine</option>
+                <option value="patrol">Patrol</option>
+              </select>
+            </div>
+            <button class="place-ship-btn" type="submit">Place Ship</button>
+            <button class="preset-ship-btn">Use Random Placements</button>
           </form>
         </div>
       </div>
